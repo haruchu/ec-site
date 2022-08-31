@@ -1,11 +1,11 @@
-var admin = require("firebase-admin");
+var admin = require('firebase-admin');
 
 // ダウンロードしたJSONファイルをインポート。
-var serviceAccount = require("./serviceAccountKey.json");
+var serviceAccount = require('./serviceAccountKey.json');
 
 try {
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert(serviceAccount),
   });
 } catch {}
 

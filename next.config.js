@@ -12,5 +12,5 @@ module.exports = {
   swcMinify: true,
   eslint: {
     dirs: ['src'], // Only run ESLint on these directories during production builds (next build)
-  }
+  },
 };
