@@ -1,9 +1,4 @@
-import {
-  css,
-  CSSObject,
-  FlattenSimpleInterpolation,
-  SimpleInterpolation,
-} from "styled-components";
+import { css, CSSObject, FlattenSimpleInterpolation, SimpleInterpolation } from 'styled-components';
 
 export const phone = (
   phone: CSSObject | TemplateStringsArray,
