@@ -9,6 +9,7 @@
     "lint": "next lint --dir src",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css}'",
+    "fix": "yarn lint:fix && yarn format",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
