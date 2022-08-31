@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+const path = require('path');
+
+module.exports = {
+  webpack5: true,
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
+    return config;
+  },
   reactStrictMode: true,
   swcMinify: true,
-}
-
-module.exports = nextConfig
+  eslint: {
+    dirs: ['src'], // Only run ESLint on these directories during production builds (next build)
+  }
+};
