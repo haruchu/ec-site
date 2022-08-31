@@ -4,7 +4,7 @@ import Image from 'next/image'
 import {db} from '../../firebase/firebase'
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = (data: any) => {
+const Home: NextPage = ({data}: any) => {
   return (
     <div className={styles.container}>
       <Head>
