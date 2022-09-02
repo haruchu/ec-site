@@ -1,3 +1,4 @@
+import ReactModal from 'react-modal';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -79,4 +80,90 @@ export const StyledPrice = styled.p`
   font-size: 14px;
   margin: 4px;
   color: gray;
+`;
+
+export const StyledModal = styled(ReactModal)`
+  display: flex;
+`;
+
+export const modalStyle: ReactModal.Styles = {
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    backgroundColor: 'rgba(0,0,0,0.85)',
+  },
+  content: {
+    position: 'absolute',
+    top: '5rem',
+    left: '5rem',
+    right: '5rem',
+    bottom: '5rem',
+    backgroundColor: 'white',
+    borderRadius: '1rem',
+    padding: '1.5rem',
+  },
+};
+
+export const ModalWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+`;
+
+export const ModalCloseButton = styled(ButtonWrapper)`
+  top: 12px;
+  right: 12px; ;
+`;
+
+export const ModalLeft = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 50px;
+`;
+
+export const ModalImage = styled.img`
+  width: 100%;
+`;
+
+export const ModalRight = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const ModalItemName = styled.p`
+  width: 100%;
+  margin: 8px;
+  font-size: 36px;
+`;
+
+export const ModalSeller = styled.p`
+  width: 100%;
+  margin: 8px;
+  padding: 8px;
+  border-bottom: 2px solid gray;
+  color: skyblue;
+
+  &::before {
+    content: '出品者：';
+    margin-right: 12px;
+  }
+`;
+
+export const ModalItemPrice = styled.p`
+  width: 100%;
+  font-size: 26px;
+  margin: 8px;
+  text-align: end;
+
+  &::before {
+    content: '¥';
+    font-size: 16px;
+    margin-right: 8px;
+  }
 `;
