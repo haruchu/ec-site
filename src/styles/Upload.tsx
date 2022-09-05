@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const FormLabel = styled.label`
@@ -11,13 +14,15 @@ export const FormLabel = styled.label`
 export const FormContent = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
-  margin-bottom: 8px;
+  margin: 20px;
 `;
 
 export const FormInput = styled.input`
   padding: 8px;
   font-size: 20px;
+  width: 100%;
 `;
 
 export const FormDropZone = styled.div`
@@ -29,5 +34,5 @@ export const FormDropZone = styled.div`
 `;
 
 export const FormImage = styled.img`
-  width: 100%;
+  width: 70%;
 `;
