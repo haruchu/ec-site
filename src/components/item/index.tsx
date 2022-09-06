@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { useEffect, useState } from 'react';
 import { ShoppingCart, Maximize2, X } from 'react-feather';
@@ -22,6 +23,7 @@ import {
   ModalSeller,
   ModalWrapper,
   ModalCloseButton,
+  BuyButtonWrapper,
 } from './style';
 type ItemProps = {
   name: string;
@@ -57,6 +59,11 @@ export const Item = ({ name, price, imageId }: ItemProps) => {
             <ModalItemName>{name}</ModalItemName>
             <ModalSeller>hogehoge林業</ModalSeller>
             <ModalItemPrice>{price}</ModalItemPrice>
+            <BuyButtonWrapper>
+              <Button variant='contained' color='primary' type='submit' onClick={() => console.log('購入')}>
+                購入
+              </Button>
+            </BuyButtonWrapper>
           </ModalRight>
         </ModalWrapper>
       </StyledModal>

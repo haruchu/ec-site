@@ -1,5 +1,6 @@
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
+import { tablet } from '../../valiables/BreakPoint';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -109,11 +110,19 @@ export const ModalWrapper = styled.div`
   position: relative;
   width: 100%;
   display: flex;
+  gap: 30px;
+
+  ${tablet`
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  `}
 `;
 
 export const ModalCloseButton = styled(ButtonWrapper)`
   top: 12px;
-  right: 12px; ;
+  right: 12px;
+  z-index: 2;
 `;
 
 export const ModalLeft = styled.div`
@@ -121,7 +130,9 @@ export const ModalLeft = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 50px;
+  ${tablet`
+    width: 80%;
+  `}
 `;
 
 export const ModalImage = styled.img`
@@ -134,6 +145,10 @@ export const ModalRight = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
+  ${tablet`
+    width: 80%;
+  `}
 `;
 
 export const ModalItemName = styled.p`
@@ -165,5 +180,12 @@ export const ModalItemPrice = styled.p`
     content: '¥';
     font-size: 16px;
     margin-right: 8px;
+  }
+`;
+
+export const BuyButtonWrapper = styled.div`
+  margin-top: 60px;
+  & button {
+    width: 200px;
   }
 `;
