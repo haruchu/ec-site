@@ -33,7 +33,7 @@ type ItemProps = {
 
 export const Item = ({ name, price, imageId }: ItemProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [url, setURL] = useState("");
+  const [url, setURL] = useState('');
 
   useEffect(() => {
     const gsReference = ref(storage, `gs://ec-0831.appspot.com/images/hoge/${imageId}.png`);
@@ -42,8 +42,8 @@ export const Item = ({ name, price, imageId }: ItemProps) => {
         setURL(fileURL);
       })
       .catch((err) => console.log(err));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -60,7 +60,12 @@ export const Item = ({ name, price, imageId }: ItemProps) => {
             <ModalSeller>hogehoge林業</ModalSeller>
             <ModalItemPrice>{price}</ModalItemPrice>
             <BuyButtonWrapper>
-              <Button variant='contained' color='primary' type='submit' onClick={() => console.log('購入')}>
+              <Button
+                variant='contained'
+                color='primary'
+                type='submit'
+                onClick={() => console.log('購入')}
+              >
                 購入
               </Button>
             </BuyButtonWrapper>
