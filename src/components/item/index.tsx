@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { getDownloadURL, ref } from 'firebase/storage';
+import { useEffect, useState } from 'react';
 import { ShoppingCart, Maximize2, X } from 'react-feather';
+import { storage } from '../../../firebase/firebase';
 
 import {
   CartButton,
@@ -24,11 +26,22 @@ import {
 type ItemProps = {
   name: string;
   price: number;
-  imagePath: string;
+  imageId: string;
 };
 
-export const Item = ({ name, price, imagePath }: ItemProps) => {
+export const Item = ({ name, price, imageId }: ItemProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [url, setURL] = useState("");
+
+  useEffect(() => {
+    const gsReference = ref(storage, `gs://ec-0831.appspot.com/images/hoge/${imageId}.png`);
+    getDownloadURL(gsReference)
+      .then((fileURL) => {
+        setURL(fileURL);
+      })
+      .catch((err) => console.log(err));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -38,7 +51,7 @@ export const Item = ({ name, price, imagePath }: ItemProps) => {
             <X />
           </ModalCloseButton>
           <ModalLeft>
-            <ModalImage src={imagePath} />
+            <ModalImage src={url} />
           </ModalLeft>
           <ModalRight>
             <ModalItemName>{name}</ModalItemName>
@@ -55,7 +68,7 @@ export const Item = ({ name, price, imagePath }: ItemProps) => {
           <ShoppingCart />
         </CartButton>
         <StyledImageButton onClick={() => setIsOpen(true)}>
-          <StyledImage src={imagePath} />
+          <StyledImage src={url} />
         </StyledImageButton>
         <ItemInfo>
           <StyledName>{name}</StyledName>
