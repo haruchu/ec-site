@@ -1,15 +1,3 @@
-import { getDownloadURL, ref } from 'firebase/storage';
-import { storage } from '../../../firebase/firebase';
-
-export const ReturnItemImageUrl = (imageId: string) => {
-  const gsReference = ref(storage, `gs://ec-0831.appspot.com/images/hoge/${imageId}.png`);
-  getDownloadURL(gsReference)
-    .then((url) => {
-      console.log(url);
-    })
-    .catch((err) => console.log(err));
-};
-
 //日付から文字列に変換する関数
 export const getStringFromDate = (date: Date) => {
   var year_str = date.getFullYear();

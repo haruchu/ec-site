@@ -46,7 +46,7 @@ const Upload: NextPage = () => {
   });
 
   const handleUpload = async () => {
-    if (name == "") {
+    if (name == '') {
       alert('名前が入力されていません');
       return;
     }
@@ -86,7 +86,13 @@ const Upload: NextPage = () => {
     <Wrapper>
       <FormContent>
         <FormLabel>商品名</FormLabel>
-        <FormInput type='text' name='name' value={name} required onChange={(e) => setName(e.target.value)} />
+        <FormInput
+          type='text'
+          name='name'
+          value={name}
+          required
+          onChange={(e) => setName(e.target.value)}
+        />
       </FormContent>
       <FormContent>
         <FormLabel>価格</FormLabel>

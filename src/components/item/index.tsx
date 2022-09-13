@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import { getDownloadURL, ref } from 'firebase/storage';
+import { useEffect, useState } from 'react';
 import { ShoppingCart, Maximize2, X } from 'react-feather';
+import { storage } from '../../../firebase/firebase';
 
 import {
   CartButton,
@@ -20,15 +23,27 @@ import {
   ModalSeller,
   ModalWrapper,
   ModalCloseButton,
+  BuyButtonWrapper,
 } from './style';
 type ItemProps = {
   name: string;
   price: number;
-  imagePath: string;
+  imageId: string;
 };
 
-export const Item = ({ name, price, imagePath }: ItemProps) => {
+export const Item = ({ name, price, imageId }: ItemProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [url, setURL] = useState('');
+
+  useEffect(() => {
+    const gsReference = ref(storage, `gs://ec-0831.appspot.com/images/hoge/${imageId}.png`);
+    getDownloadURL(gsReference)
+      .then((fileURL) => {
+        setURL(fileURL);
+      })
+      .catch((err) => console.log(err));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -38,12 +53,22 @@ export const Item = ({ name, price, imagePath }: ItemProps) => {
             <X />
           </ModalCloseButton>
           <ModalLeft>
-            <ModalImage src={imagePath} />
+            <ModalImage src={url} />
           </ModalLeft>
           <ModalRight>
             <ModalItemName>{name}</ModalItemName>
             <ModalSeller>hogehoge林業</ModalSeller>
             <ModalItemPrice>{price}</ModalItemPrice>
+            <BuyButtonWrapper>
+              <Button
+                variant='contained'
+                color='primary'
+                type='submit'
+                onClick={() => console.log('購入')}
+              >
+                購入
+              </Button>
+            </BuyButtonWrapper>
           </ModalRight>
         </ModalWrapper>
       </StyledModal>
@@ -55,7 +80,7 @@ export const Item = ({ name, price, imagePath }: ItemProps) => {
           <ShoppingCart />
         </CartButton>
         <StyledImageButton onClick={() => setIsOpen(true)}>
-          <StyledImage src={imagePath} />
+          <StyledImage src={url} />
         </StyledImageButton>
         <ItemInfo>
           <StyledName>{name}</StyledName>
