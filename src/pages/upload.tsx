@@ -55,13 +55,14 @@ const Upload: NextPage = () => {
       return;
     }
     const date = new Date();
-    const imageId = getStringFromDate(date);
-    storage.ref(`/images/hoge/${imageId}.png`).put(myFiles[0]);
+    const CurrentDate = getStringFromDate(date);
+    storage.ref(`/images/hoge/${CurrentDate}.png`).put(myFiles[0]);
     const docRef = db.collection('items').doc();
     const insertData = {
       name: name,
       price: price,
-      imageId: imageId,
+      imageId: CurrentDate,
+      uploadDate: CurrentDate
     };
     docRef.set(insertData);
     router.push('/');
