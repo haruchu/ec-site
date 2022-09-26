@@ -1,8 +1,19 @@
+import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
+import { phone, tablet } from '../valiables/BreakPoint';
 
-export const Wrapper = styled.div`
+export const StyledInfiniteScroll = styled(InfiniteScroll)`
+  min-height: 100vh;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 50px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 80px;
+  ${tablet`
+    gap: 60px;
+  `}
+  ${phone`
+    gap: 40px;
+  `}
+  margin: 40px 20px;
 `;
