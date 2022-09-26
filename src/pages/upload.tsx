@@ -62,7 +62,7 @@ const Upload: NextPage = () => {
       name: name,
       price: price,
       imageId: CurrentDate,
-      uploadDate: CurrentDate
+      uploadDate: CurrentDate,
     };
     docRef.set(insertData);
     router.push('/');
