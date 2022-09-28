@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { phone } from '../valiables/BreakPoint';
+import { COLOR } from '../valiables/Color';
 
 export const Wrapper = styled.form`
   height: 100vh;
@@ -12,7 +13,7 @@ export const Wrapper = styled.form`
   ${phone`
   gap: 30px;
   `}
-  background-color: #e8d7f4;
+  background-color: ${COLOR.main};
 `;
 
 export const FormWrapper = styled.div`
