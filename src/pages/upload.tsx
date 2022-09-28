@@ -10,6 +10,8 @@ import {
   FormImage,
   FormInput,
   FormLabel,
+  FormWrapper,
+  SubmitButton,
   Wrapper,
 } from '../styles/Upload';
 import { getStringFromDate } from './api/item';
@@ -85,38 +87,40 @@ const Upload: NextPage = () => {
 
   return (
     <Wrapper>
-      <FormContent>
-        <FormLabel>商品名</FormLabel>
-        <FormInput
-          type='text'
-          name='name'
-          value={name}
-          required
-          onChange={(e) => setName(e.target.value)}
-        />
-      </FormContent>
-      <FormContent>
-        <FormLabel>価格</FormLabel>
-        <FormInput
-          type='text'
-          name='price'
-          value={price}
-          required
-          onChange={(e) => setPrice(Number(e.target.value))}
-        />
-      </FormContent>
+      <FormWrapper>
+        <FormContent>
+          <FormLabel>商品名</FormLabel>
+          <FormInput
+            type='text'
+            name='name'
+            value={name}
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+        </FormContent>
+        <FormContent>
+          <FormLabel>価格</FormLabel>
+          <FormInput
+            type='text'
+            name='price'
+            value={price}
+            required
+            onChange={(e) => setPrice(Number(e.target.value))}
+          />
+        </FormContent>
+      </FormWrapper>
       <FormContent {...getRootProps()}>
         <FormLabel>商品画像</FormLabel>
         <input {...getInputProps()} type='file' />
         {myFiles.length === 0 ? (
-          <FormDropZone>ここをクリック。または画像をドラッグ＆ドロップしてください</FormDropZone>
+          <FormDropZone>画像を選択</FormDropZone>
         ) : (
           <React.Fragment key={myFiles[0].name}>{src && <FormImage src={src} />}</React.Fragment>
         )}
       </FormContent>
-      <Button variant='contained' color='primary' type='submit' onClick={() => handleUpload()}>
+      <SubmitButton type='submit' onClick={() => handleUpload()}>
         アップロード
-      </Button>
+      </SubmitButton>
     </Wrapper>
   );
 };
