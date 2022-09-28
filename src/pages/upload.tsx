@@ -1,10 +1,13 @@
-import Button from '@material-ui/core/Button';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { db, storage } from '../../firebase/firebase';
+import { Button } from '../components/button';
+import { Input } from '../components/input';
 import {
+  ErrorMessage,
   FormContent,
   FormDropZone,
   FormImage,
@@ -16,10 +19,14 @@ import {
 } from '../styles/Upload';
 import { getStringFromDate } from './api/item';
 
+type FormValues = {
+  name: string;
+  price: number;
+};
+
 const Upload: NextPage = () => {
   const [myFiles, setMyFiles] = useState<File[]>([]);
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState(0);
+  const [hasNotFile, setHasNotFile] = useState(false);
   const [src, setSrc] = useState('');
   const router = useRouter();
 
@@ -47,22 +54,19 @@ const Upload: NextPage = () => {
     onDropRejected,
   });
 
-  const handleUpload = async () => {
-    if (name == '') {
-      alert('名前が入力されていません');
-      return;
-    }
+  const handleUpload = async (data: FormValues) => {
     if (!myFiles[0]) {
-      alert('商品画像が追加されていません');
+      setHasNotFile(true);
       return;
     }
+
     const date = new Date();
     const CurrentDate = getStringFromDate(date);
     storage.ref(`/images/hoge/${CurrentDate}.png`).put(myFiles[0]);
     const docRef = db.collection('items').doc();
     const insertData = {
-      name: name,
-      price: price,
+      name: data.name,
+      price: data.price,
       imageId: CurrentDate,
       uploadDate: CurrentDate,
     };
@@ -85,28 +89,32 @@ const Upload: NextPage = () => {
     };
   };
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = (data) => handleUpload(data);
+
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleSubmit(onSubmit)}>
       <FormWrapper>
         <FormContent>
           <FormLabel>商品名</FormLabel>
-          <FormInput
-            type='text'
-            name='name'
-            value={name}
-            required
-            onChange={(e) => setName(e.target.value)}
-          />
+          <Input {...register('name', { required: true })} />
+          {errors.name && errors.name.type === 'required' && (
+            <ErrorMessage>商品名が入力されていません</ErrorMessage>
+          )}
         </FormContent>
         <FormContent>
           <FormLabel>価格</FormLabel>
-          <FormInput
-            type='text'
-            name='price'
-            value={price}
-            required
-            onChange={(e) => setPrice(Number(e.target.value))}
-          />
+          <Input {...register('price', { required: true, pattern: /\d+/i })} />
+          {errors.price && errors.price.type === 'required' && (
+            <ErrorMessage>価格が入力されていません</ErrorMessage>
+          )}
+          {errors.price && errors.price.type === 'pattern' && (
+            <ErrorMessage>数値のみ入力可能です</ErrorMessage>
+          )}
         </FormContent>
       </FormWrapper>
       <FormContent {...getRootProps()}>
@@ -117,10 +125,9 @@ const Upload: NextPage = () => {
         ) : (
           <React.Fragment key={myFiles[0].name}>{src && <FormImage src={src} />}</React.Fragment>
         )}
+        {hasNotFile && !myFiles[0] && <ErrorMessage>画像を添付してください</ErrorMessage>}
       </FormContent>
-      <SubmitButton type='submit' onClick={() => handleUpload()}>
-        アップロード
-      </SubmitButton>
+      <Button text='アップロード' />
     </Wrapper>
   );
 };

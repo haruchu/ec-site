@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { phone } from '../valiables/BreakPoint';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.form`
   height: 100vh;
   padding: 50px;
   display: flex;
@@ -54,6 +54,13 @@ export const FormInput = styled.input`
 
   &:focus {
     outline: none;
+  }
+`;
+
+export const ErrorMessage = styled.span`
+  color: red;
+  &::before {
+    content: '注）';
   }
 `;
 
