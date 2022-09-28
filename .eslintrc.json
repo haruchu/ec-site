@@ -10,6 +10,7 @@
           "order": "asc"
         }
       }
-    ]
+    ],
+    "react/display-name": "off"
   }
 }

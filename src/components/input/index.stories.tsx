@@ -1,4 +1,5 @@
 import { ComponentStory } from '@storybook/react';
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Input } from './index';
 
@@ -14,5 +15,23 @@ export const Default = Template.bind({});
 Default.args = {
   name: "text",
   required: true,
-  onChange: () => console.log("onChange")
 };
+
+export const Test = () => {
+  type FormValues = {
+    test: string
+  }
+  const { register, handleSubmit } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        name="text"
+        required={true}
+        {...register("test")}
+      />
+      <input type="submit" />
+    </form>
+  );
+};
+
