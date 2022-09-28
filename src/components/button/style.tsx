@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { phone } from "../../valiables/BreakPoint";
+import styled from 'styled-components';
+import { phone } from '../../valiables/BreakPoint';
 
 export const StyledButton = styled.button`
   cursor: pointer;
