@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { phone } from "../../valiables/BreakPoint";
+import styled from 'styled-components';
+import { phone } from '../../valiables/BreakPoint';
 
 export const FormInput = styled.input`
   width: 100%;
