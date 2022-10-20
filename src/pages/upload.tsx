@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -98,6 +99,10 @@ const Upload: NextPage = () => {
 
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
+      <Head>
+        <title>出品</title>
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
       <FormWrapper>
         <FormContent>
           <FormLabel>商品名</FormLabel>

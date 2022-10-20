@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { db } from '../../firebase/firebase';
 import { Item } from '../components/item';
 import styles from '../styles/Home.module.css';
-import { StyledInfiniteScroll } from '../styles/List';
+import { StyledInfiniteScroll, Wrapper } from '../styles/List';
 
 type ItemType = {
   name: string;
@@ -44,7 +44,7 @@ const List: NextPage = ({ defaultItems }: ListType) => {
   };
 
   return (
-    <div className={styles.container}>
+    <Wrapper>
       <Head>
         <title>商品リスト</title>
         <link rel='icon' href='/favicon.ico' />
@@ -54,7 +54,7 @@ const List: NextPage = ({ defaultItems }: ListType) => {
           <Item key={index} name={item.name} price={item.price} imageId={item.imageId} />
         ))}
       </StyledInfiniteScroll>
-    </div>
+    </Wrapper>
   );
 };
 
