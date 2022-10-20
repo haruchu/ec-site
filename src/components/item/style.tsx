@@ -1,13 +1,14 @@
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
 import { tablet } from '../../valiables/BreakPoint';
+import { COLOR } from '../../valiables/Color';
 
 export const Wrapper = styled.div`
   position: relative;
   width: 300px;
   height: 350px;
-  background-color: white;
-  box-shadow: -5px -5px 10px 0px rgba(255, 255, 255, 0.5), 5px 5px 10px 0px rgba(0, 0, 0, 0.3);
+  background: #e8d7f4;
+  box-shadow: 9px 9px 18px #cabbd4, -9px -9px 18px #fff3ff;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -100,7 +101,7 @@ export const modalStyle: ReactModal.Styles = {
     left: '5rem',
     right: '5rem',
     bottom: '5rem',
-    backgroundColor: 'white',
+    backgroundColor: `${COLOR.main}`,
     borderRadius: '1rem',
     padding: '1.5rem',
   },
