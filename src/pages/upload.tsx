@@ -12,12 +12,10 @@ import {
   FormContent,
   FormDropZone,
   FormImage,
-  FormInput,
   FormLabel,
   FormWrapper,
-  SubmitButton,
   Wrapper,
-} from '../styles/Upload';
+} from '../styles/Form';
 import { getStringFromDate } from './api/item';
 
 type FormValues = {
@@ -106,14 +104,14 @@ const Upload: NextPage = () => {
       <FormWrapper>
         <FormContent>
           <FormLabel>商品名</FormLabel>
-          <Input {...register('name', { required: true })} />
+          <Input type="text" {...register('name', { required: true })} />
           {errors.name && errors.name.type === 'required' && (
             <ErrorMessage>商品名が入力されていません</ErrorMessage>
           )}
         </FormContent>
         <FormContent>
           <FormLabel>価格</FormLabel>
-          <Input {...register('price', { required: true, pattern: /\d+/i })} />
+          <Input type="text" {...register('price', { required: true, pattern: /\d+/i })} />
           {errors.price && errors.price.type === 'required' && (
             <ErrorMessage>価格が入力されていません</ErrorMessage>
           )}
