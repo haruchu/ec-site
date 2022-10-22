@@ -27,13 +27,7 @@ const Signup: NextPage = () => {
   const router = useRouter();
 
   const handleUpload = async (data: FormValues) => {
-    const docRef = db.collection('users').doc();
-    const insertData = {
-      name: data.name,
-      price: data.password,
-    };
-    docRef.set(insertData);
-    setAuthInfo({ userId: "abcdefg123455" });
+    setAuthInfo({ userId: 'abcdefg123455' });
     router.push('/');
   };
 
@@ -52,26 +46,14 @@ const Signup: NextPage = () => {
           <ErrorMessage>ユーザ名が入力されていません</ErrorMessage>
         )}
       </FormContent>
-      <FormWrapper>
-        <FormContent>
-          <FormLabel>パスワード</FormLabel>
-          <Input type='password' {...register('password', { required: true })} />
-          {errors.password && errors.password.type === 'required' && (
-            <ErrorMessage>パスワードが入力されていません</ErrorMessage>
-          )}
-        </FormContent>
-        <FormContent>
-          <FormLabel>パスワード確認</FormLabel>
-          <Input
-            type='password'
-            {...register('password_repeat', {
-              validate: (value) => value === watch('password') || 'パスワードが一致しません',
-            })}
-          />
-          {errors.password_repeat && <ErrorMessage>{errors.password_repeat.message}</ErrorMessage>}
-        </FormContent>
-      </FormWrapper>
-      <Button text='登録' />
+      <FormContent>
+        <FormLabel>パスワード</FormLabel>
+        <Input type='password' {...register('password', { required: true })} />
+        {errors.password && errors.password.type === 'required' && (
+          <ErrorMessage>パスワードが入力されていません</ErrorMessage>
+        )}
+      </FormContent>
+      <Button text='ログイン' />
     </Wrapper>
   );
 };
