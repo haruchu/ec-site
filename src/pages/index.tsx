@@ -3,17 +3,17 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useContext } from 'react';
 import { db } from '../../firebase/firebase';
-import { AuthInfoContext, LoggedInContext } from '../contexts/AuthContextProvider';
+import { useAuthDispatchUserContext, useLoggedInContext } from '../contexts/AuthContextProvider';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = ({ data }: any) => {
-  const isLoggedIn = useContext(LoggedInContext);
-  const [authInfo, setAuthInfo] = useContext(AuthInfoContext);
+  const isLoggedIn = useLoggedInContext();
+  const { signout } = useAuthDispatchUserContext();
 
   return (
     <>
       {isLoggedIn ? "ログイン" : "未ログイン"}
-      {isLoggedIn && <button onClick={() => setAuthInfo({ userId: "" })}>ログアウト</button>}
+      {isLoggedIn && <button onClick={() => signout()}>ログアウト</button>}
     </>
   );
 };

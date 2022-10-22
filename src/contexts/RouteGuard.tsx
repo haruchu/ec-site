@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect, useContext } from 'react';
-import { AuthInfoContext, LoggedInContext } from './AuthContextProvider';
+import { useState, useEffect } from 'react';
+import { useLoggedInContext  } from './AuthContextProvider';
 
 export { RouteGuard };
 
 function RouteGuard({ children }) {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
-  const isLoggedIn = useContext(LoggedInContext);
+  const isLoggedIn = useLoggedInContext();
 
   useEffect(() => {
     // on initial load - run auth check
@@ -33,7 +33,7 @@ function RouteGuard({ children }) {
     // redirect to login page if accessing a private page and not logged in
     const publicPaths = ['/signup', '/login'];
     const path = url.split('?')[0];
-    console.log(isLoggedIn);
+
     if (!isLoggedIn && !publicPaths.includes(path)) {
       setAuthorized(false);
       router.replace('/login');

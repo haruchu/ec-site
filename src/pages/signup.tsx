@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { db } from '../../firebase/firebase';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
-import { LoggedInContext, AuthInfoContext } from '../contexts/AuthContextProvider';
+import { useAuthDispatchUserContext } from '../contexts/AuthContextProvider';
 import { ErrorMessage, FormContent, FormLabel, FormWrapper, Wrapper } from '../styles/Form';
 
 type FormValues = {
@@ -16,8 +16,8 @@ type FormValues = {
 };
 
 const Signup: NextPage = () => {
-  const isLoggedIn = useContext(LoggedInContext);
-  const [authInfo, setAuthInfo] = useContext(AuthInfoContext);
+  const { signin } = useAuthDispatchUserContext();
+
   const {
     register,
     handleSubmit,
@@ -33,7 +33,7 @@ const Signup: NextPage = () => {
       price: data.password,
     };
     docRef.set(insertData);
-    setAuthInfo({ userId: "abcdefg123455" });
+    signin("id", data.name, data.password);
     router.push('/');
   };
 

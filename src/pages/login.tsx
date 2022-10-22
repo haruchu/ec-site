@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { db } from '../../firebase/firebase';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
-import { LoggedInContext, AuthInfoContext } from '../contexts/AuthContextProvider';
+import { useAuthDispatchUserContext, useLoggedInContext } from '../contexts/AuthContextProvider';
 import { ErrorMessage, FormContent, FormLabel, FormWrapper, Wrapper } from '../styles/Form';
 
 type FormValues = {
@@ -15,9 +15,8 @@ type FormValues = {
   password_repeat: string;
 };
 
-const Signup: NextPage = () => {
-  const isLoggedIn = useContext(LoggedInContext);
-  const [authInfo, setAuthInfo] = useContext(AuthInfoContext);
+const Login: NextPage = () => {
+  const { signin } = useAuthDispatchUserContext();
   const {
     register,
     handleSubmit,
@@ -26,8 +25,9 @@ const Signup: NextPage = () => {
   } = useForm<FormValues>();
   const router = useRouter();
 
+
   const handleUpload = async (data: FormValues) => {
-    setAuthInfo({ userId: 'abcdefg123455' });
+    signin("id", data.name, data.password)
     router.push('/');
   };
 
@@ -57,4 +57,4 @@ const Signup: NextPage = () => {
     </Wrapper>
   );
 };
-export default Signup;
+export default Login;

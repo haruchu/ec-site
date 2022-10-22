@@ -1,57 +1,76 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import React, {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useState,
+} from 'react';
 
-type AuthInfo = {
-  userId: string;
+type Auth = {
+  isLogined: boolean;
 };
 
-// ログイン状態のContext
-export const LoggedInContext = React.createContext<boolean>(false);
+type AuthDispatcher = {
+  setAuth: Dispatch<SetStateAction<Auth>>;
+  signin: (id: string, name: string, password: string) => void;
+  signout: () => void;
+};
 
-export const AuthInfoContext = React.createContext<
-  [AuthInfo, React.Dispatch<React.SetStateAction<AuthInfo>>]
-  >([{ userId: "" }, () => { }]);
+const LoggedInContext = React.createContext<boolean>({} as boolean);
 
-  /**
- * デフォルトのAuthInfoを取得
- * ローカルストレージから取得できた場合はその値をパース
- * 取得できない場合は空の情報を返す
- */
-function getDefaultAuthInfo(): AuthInfo {
-  if (typeof window !== "undefined") {
-    const defaultAuthInfo = window.localStorage.getItem("authInfo");
-    if (defaultAuthInfo) {
-      return JSON.parse(defaultAuthInfo) as AuthInfo;
-    } else {
-      return { userId: "" };
+export const useLoggedInContext = () => {
+  return useContext<boolean>(LoggedInContext);
+};
+
+const AuthDispatchUserContext = createContext<AuthDispatcher>({} as AuthDispatcher);
+
+export const useAuthDispatchUserContext = () => {
+  return useContext<AuthDispatcher>(AuthDispatchUserContext);
+};
+
+type Props = {
+  children: ReactNode;
+};
+
+export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) => {
+  const router = useRouter();
+  const getDefaultAuth = (): Auth => {
+    let isLogined = false;
+    if (typeof window !== 'undefined') {
+      const userIdToken = localStorage.getItem('userId');
+      isLogined = userIdToken !== null;
     }
-  }
-}
+    return {
+      isLogined: isLogined,
+    };
+  };
+  const [auth, setAuth] = useState<Auth>(getDefaultAuth());
 
-/**
- * 認証情報をローカルストレージに追加
- */
-function setAutoInfoToLocalStorage(authInfo: AuthInfo): void {
-  const authInfoStringfy = JSON.stringify(authInfo);
-  window.localStorage.setItem("authInfo", authInfoStringfy);
-}
-
-export const AuthContextProvider: React.FC<{children: ReactNode}> = (props) => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [authInfo, setAuthInfo] = useState<AuthInfo>(getDefaultAuthInfo());
-
-  useEffect(() => {
-    if (authInfo?.userId) {
-      setAutoInfoToLocalStorage(authInfo);
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
+  const signin = async (id: string, name: string, password: string) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('userId', id);
     }
-  }, [authInfo]);
+    setAuth({ isLogined: true });
+    router.push('/');
+  };
+
+  const signout = async () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('userId');
+    }
+    setAuth({ isLogined: false });
+    router.push('/login');
+  };
+
+  const dispatchValue: AuthDispatcher = { setAuth, signin, signout };
+
   return (
-    <LoggedInContext.Provider value={loggedIn}>
-      <AuthInfoContext.Provider value={[authInfo, setAuthInfo]}>
+    <LoggedInContext.Provider value={auth.isLogined}>
+      <AuthDispatchUserContext.Provider value={dispatchValue}>
         {props.children}
-      </AuthInfoContext.Provider>
+      </AuthDispatchUserContext.Provider>
     </LoggedInContext.Provider>
   );
 };
