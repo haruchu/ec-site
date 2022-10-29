@@ -4,7 +4,13 @@ import { AuthContextProvider } from '../contexts/AuthContextProvider';
 import { RouteGuard } from '../contexts/RouteGuard';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <AuthContextProvider><RouteGuard><Component {...pageProps} /></RouteGuard></AuthContextProvider>;
+  return (
+    <AuthContextProvider>
+      <RouteGuard>
+        <Component {...pageProps} />
+      </RouteGuard>
+    </AuthContextProvider>
+  );
 }
 
 export default MyApp;

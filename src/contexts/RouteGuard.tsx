@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useLoggedInContext  } from './AuthContextProvider';
+import { useLoggedInContext } from './AuthContextProvider';
 
 export { RouteGuard };
 

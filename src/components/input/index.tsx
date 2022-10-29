@@ -3,7 +3,7 @@ import { FormInput } from './style';
 
 type InputProps = {
   className?: string;
-  type: "text" | "password";
+  type: 'text' | 'password';
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(

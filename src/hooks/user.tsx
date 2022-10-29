@@ -1,4 +1,4 @@
-import { db } from "../../firebase/firebase";
+import { db } from '../../firebase/firebase';
 
 export const getUserInfo = async () => {
   let data = {};
@@ -11,5 +11,6 @@ export const getUserInfo = async () => {
     id: doc.id,
     ...doc.data(),
   }));
+  console.log(userId);
   return data;
 };

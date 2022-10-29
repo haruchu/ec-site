@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import {v4} from 'uuid'
+import { v4 } from 'uuid';
 import { db } from '../../firebase/firebase';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
