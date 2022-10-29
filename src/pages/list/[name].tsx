@@ -1,16 +1,14 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
-import { db } from '../../firebase/firebase';
-import { Item } from '../components/item';
-import styles from '../styles/Home.module.css';
-import { StyledInfiniteScroll, Wrapper } from '../styles/List';
+import { db } from '../../../firebase/firebase';
+import { Item } from '../../components/item';
+import { Wrapper, StyledInfiniteScroll } from '../../styles/List';
 
 type ItemType = {
   name: string;
   price: number;
   imageId: string;
-  saler: string;
   uploadDate: string;
 };
 
@@ -27,6 +25,7 @@ const List: NextPage = ({ salerName, defaultItems }: ListType) => {
 
   const loadMore = async (page: any) => {
     db.collection('items')
+      .where('saler', '==', salerName)
       .orderBy('uploadDate', 'desc')
       .limit(1)
       .startAfter(items[items.length - 1].uploadDate)
@@ -51,17 +50,21 @@ const List: NextPage = ({ salerName, defaultItems }: ListType) => {
         <title>商品リスト</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <StyledInfiniteScroll loadMore={loadMore} hasMore={hasMore}>
-        {items.map((item, index) => (
-          <Item
-            key={index}
-            name={item.name}
-            price={item.price}
-            imageId={item.imageId}
-            salerName={item.saler}
-          />
-        ))}
-      </StyledInfiniteScroll>
+      {items.length !== 0 ? (
+        <StyledInfiniteScroll loadMore={loadMore} hasMore={hasMore}>
+          {items.map((item, index) => (
+            <Item
+              key={index}
+              name={item.name}
+              price={item.price}
+              imageId={item.imageId}
+              salerName={salerName}
+            />
+          ))}
+        </StyledInfiniteScroll>
+      ) : (
+        <>ありません</>
+      )}
     </Wrapper>
   );
 };
@@ -69,11 +72,15 @@ const List: NextPage = ({ salerName, defaultItems }: ListType) => {
 export default List;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const colRef = db.collection('items').orderBy('uploadDate', 'desc').limit(PERITEM);
+  const salerName = context.query.name;
+  const colRef = db
+    .collection('items')
+    .where('saler', '==', salerName)
+    .orderBy('uploadDate', 'desc')
+    .limit(PERITEM);
   const cardSnap = await colRef.get();
   const defaultItems = cardSnap.docs.map((doc) => ({
-    id: doc.id,
     ...doc.data(),
   }));
-  return { props: { defaultItems } };
+  return { props: { salerName, defaultItems } };
 };

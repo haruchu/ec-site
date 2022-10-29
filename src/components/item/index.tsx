@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button';
 import { getDownloadURL, ref } from 'firebase/storage';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ShoppingCart, Maximize2, X } from 'react-feather';
 import { storage } from '../../../firebase/firebase';
@@ -29,10 +30,12 @@ type ItemProps = {
   name: string;
   price: number;
   imageId: string;
+  salerName: string;
 };
 
-export const Item = ({ name, price, imageId }: ItemProps) => {
+export const Item = ({ name, price, imageId, salerName }: ItemProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const [url, setURL] = useState('');
 
   useEffect(() => {
@@ -57,7 +60,16 @@ export const Item = ({ name, price, imageId }: ItemProps) => {
           </ModalLeft>
           <ModalRight>
             <ModalItemName>{name}</ModalItemName>
-            <ModalSeller>hogehoge林業</ModalSeller>
+            <ModalSeller
+              onClick={() =>
+                router.push({
+                  pathname: '/list', //URL
+                  query: { name: salerName }, //検索クエリ
+                })
+              }
+            >
+              {salerName}
+            </ModalSeller>
             <ModalItemPrice>{price}</ModalItemPrice>
             <BuyButtonWrapper>
               <Button

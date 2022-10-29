@@ -25,10 +25,14 @@ const Login: NextPage = () => {
   } = useForm<FormValues>();
   const router = useRouter();
 
-
   const handleUpload = async (data: FormValues) => {
-    signin("id", data.name, data.password)
-    router.push('/');
+    const colRef = db.collection('users');
+    const userSnap = await colRef.where('name', '==', data.name).get();
+    const userData = userSnap.docs.map((doc) => ({
+      ...doc.data(),
+    }));
+    signin(userData[0].id, data.name, data.password);
+    router.push('/list');
   };
 
   const onSubmit: SubmitHandler<FormValues> = (data) => handleUpload(data);

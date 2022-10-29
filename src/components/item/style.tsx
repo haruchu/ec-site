@@ -164,6 +164,7 @@ export const ModalSeller = styled.p`
   padding: 8px;
   border-bottom: 2px solid gray;
   color: skyblue;
+  cursor: pointer;
 
   &::before {
     content: '出品者：';
