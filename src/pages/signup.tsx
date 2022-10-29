@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import {v4} from 'uuid'
 import { db } from '../../firebase/firebase';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
@@ -27,13 +28,15 @@ const Signup: NextPage = () => {
   const router = useRouter();
 
   const handleUpload = async (data: FormValues) => {
+    const uuid = v4();
     const docRef = db.collection('users').doc();
     const insertData = {
+      id: uuid,
       name: data.name,
-      price: data.password,
+      password: data.password,
     };
     docRef.set(insertData);
-    signin("id", data.name, data.password);
+    signin(uuid, data.name, data.password);
     router.push('/');
   };
 

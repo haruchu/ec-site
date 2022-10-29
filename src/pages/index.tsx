@@ -1,32 +1,33 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
-import { useContext } from 'react';
-import { db } from '../../firebase/firebase';
+import { useEffect, useState } from 'react';
 import { useAuthDispatchUserContext, useLoggedInContext } from '../contexts/AuthContextProvider';
-import styles from '../styles/Home.module.css';
+import { getUserInfo } from '../hooks/user';
 
-const Home: NextPage = ({ data }: any) => {
+const Home: NextPage = () => {
   const isLoggedIn = useLoggedInContext();
   const { signout } = useAuthDispatchUserContext();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    getUserInfo().then((data) => {
+      setUserName(data[0].name);
+    });
+    console.log(userName);
+    // マウント次のみ実行したいので許容する
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
-      {isLoggedIn ? "ログイン" : "未ログイン"}
+      <Head>
+        <title>index</title>
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
+      {isLoggedIn ? 'ログイン' : '未ログイン'}
       {isLoggedIn && <button onClick={() => signout()}>ログアウト</button>}
     </>
   );
 };
 
 export default Home;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const colRef = db.collection('items');
-  const cardSnap = await colRef.get();
-  const data = cardSnap.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-  console.log(data);
-  return { props: { data } };
-};
