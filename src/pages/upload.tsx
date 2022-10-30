@@ -5,8 +5,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { db, storage } from '../../firebase/firebase';
-import { Button } from '../components/button';
-import { Input } from '../components/input';
+import { Button } from '../components/molecules/button';
+import { Input } from '../components/molecules/input';
 import { getUserInfo } from '../hooks/user';
 import {
   ErrorMessage,

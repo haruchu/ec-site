@@ -5,8 +5,8 @@ import React, { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 } from 'uuid';
 import { db } from '../../firebase/firebase';
-import { Button } from '../components/button';
-import { Input } from '../components/input';
+import { Button } from '../components/molecules/button';
+import { Input } from '../components/molecules/input';
 import { useAuthDispatchUserContext } from '../contexts/AuthContextProvider';
 import { ErrorMessage, FormContent, FormLabel, FormWrapper, Wrapper } from '../styles/Form';
 

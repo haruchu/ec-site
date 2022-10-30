@@ -1,7 +1,7 @@
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
-import { tablet } from '../../valiables/BreakPoint';
-import { COLOR } from '../../valiables/Color';
+import { tablet } from '../../../valiables/BreakPoint';
+import { COLOR } from '../../../valiables/Color';
 
 export const Wrapper = styled.div`
   position: relative;

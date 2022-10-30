@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
 import { db } from '../../firebase/firebase';
-import { Item } from '../components/item';
+import { Item } from '../components/molecules/item';
 import styles from '../styles/Home.module.css';
 import { StyledInfiniteScroll, Wrapper } from '../styles/List';
 

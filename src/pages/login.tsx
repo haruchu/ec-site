@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { db } from '../../firebase/firebase';
-import { Button } from '../components/button';
-import { Input } from '../components/input';
+import { Button } from '../components/molecules/button';
+import { Input } from '../components/molecules/input';
 import { useAuthDispatchUserContext, useLoggedInContext } from '../contexts/AuthContextProvider';
 import { ErrorMessage, FormContent, FormLabel, FormWrapper, Wrapper } from '../styles/Form';
 

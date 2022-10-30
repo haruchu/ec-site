@@ -3,7 +3,7 @@ import { getDownloadURL, ref } from 'firebase/storage';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ShoppingCart, Maximize2, X } from 'react-feather';
-import { storage } from '../../../firebase/firebase';
+import { storage } from '../../../../firebase/firebase';
 
 import {
   CartButton,
