@@ -62,10 +62,7 @@ export const Item = ({ name, price, imageId, salerName }: ItemProps) => {
             <ModalItemName>{name}</ModalItemName>
             <ModalSeller
               onClick={() =>
-                router.push({
-                  pathname: '/list', //URL
-                  query: { name: salerName }, //検索クエリ
-                })
+                router.push(`/list/${salerName}`)
               }
             >
               {salerName}
