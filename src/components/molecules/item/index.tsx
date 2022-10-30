@@ -60,13 +60,7 @@ export const Item = ({ name, price, imageId, salerName }: ItemProps) => {
           </ModalLeft>
           <ModalRight>
             <ModalItemName>{name}</ModalItemName>
-            <ModalSeller
-              onClick={() =>
-                router.push(`/list/${salerName}`)
-              }
-            >
-              {salerName}
-            </ModalSeller>
+            <ModalSeller onClick={() => router.push(`/list/${salerName}`)}>{salerName}</ModalSeller>
             <ModalItemPrice>{price}</ModalItemPrice>
             <BuyButtonWrapper>
               <Button

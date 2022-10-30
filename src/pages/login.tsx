@@ -35,10 +35,8 @@ const Login: NextPage = () => {
     if (userData.length > 0) {
       signin(userData[0].id, data.name, data.password);
       router.push('/list');
-    }
-    else {
+    } else {
       router.push('/404');
-      
     }
   };
 
