@@ -2,15 +2,8 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
 import { db } from '../../../firebase/firebase';
-import { Item } from '../../components/molecules/item';
-import { Wrapper, StyledInfiniteScroll } from '../../styles/List';
-
-type ItemType = {
-  name: string;
-  price: number;
-  imageId: string;
-  uploadDate: string;
-};
+import ListLayout, { ItemType } from '../../components/organisms/itemList';
+import { Wrapper } from '../../styles/List';
 
 type ListType = {
   salerName: string;
@@ -23,7 +16,7 @@ const List: NextPage = ({ salerName, defaultItems }: ListType) => {
   const [items, setItems] = useState(defaultItems);
   const [hasMore, setHasMore] = useState(true);
 
-  const loadMore = async (page: any) => {
+  const loadMore = async () => {
     db.collection('items')
       .where('saler', '==', salerName)
       .orderBy('uploadDate', 'desc')
@@ -47,21 +40,11 @@ const List: NextPage = ({ salerName, defaultItems }: ListType) => {
   return (
     <Wrapper>
       <Head>
-        <title>商品リスト</title>
+        <title>{salerName}の商品リスト</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       {items.length !== 0 ? (
-        <StyledInfiniteScroll loadMore={loadMore} hasMore={hasMore}>
-          {items.map((item, index) => (
-            <Item
-              key={index}
-              name={item.name}
-              price={item.price}
-              imageId={item.imageId}
-              salerName={salerName}
-            />
-          ))}
-        </StyledInfiniteScroll>
+        <ListLayout items={items} loadMore={loadMore} hasMore={hasMore} />
       ) : (
         <>ありません</>
       )}
