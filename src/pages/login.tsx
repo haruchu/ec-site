@@ -31,8 +31,15 @@ const Login: NextPage = () => {
     const userData = userSnap.docs.map((doc) => ({
       ...doc.data(),
     }));
-    signin(userData[0].id, data.name, data.password);
-    router.push('/list');
+    console.log(userData);
+    if (userData.length > 0) {
+      signin(userData[0].id, data.name, data.password);
+      router.push('/list');
+    }
+    else {
+      router.push('/404');
+      
+    }
   };
 
   const onSubmit: SubmitHandler<FormValues> = (data) => handleUpload(data);
