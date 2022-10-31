@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { db } from '../../../firebase/firebase';
 import ListLayout, { ItemType } from '../../components/organisms/itemList';
-import { Wrapper } from '../../styles/List';
+import { Wrapper } from '../../styles/Share';
 
 type ListType = {
   salerName: string;

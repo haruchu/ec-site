@@ -1,9 +1,9 @@
-import Button from '@material-ui/core/Button';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ShoppingCart, Maximize2, X } from 'react-feather';
 import { storage } from '../../../../firebase/firebase';
+import { Button } from '../button';
 
 import {
   CartButton,
@@ -64,13 +64,9 @@ export const Item = ({ name, price, imageId, salerName }: ItemProps) => {
             <ModalItemPrice>{price}</ModalItemPrice>
             <BuyButtonWrapper>
               <Button
-                variant='contained'
-                color='primary'
-                type='submit'
+                text="購入"
                 onClick={() => console.log('購入')}
-              >
-                購入
-              </Button>
+              />
             </BuyButtonWrapper>
           </ModalRight>
         </ModalWrapper>
