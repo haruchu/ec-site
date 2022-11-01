@@ -27,13 +27,14 @@ import {
   BuyButtonWrapper,
 } from './style';
 type ItemProps = {
+  id: string;
   name: string;
   price: number;
   imageId: string;
   salerName: string;
 };
 
-export const Item = ({ name, price, imageId, salerName }: ItemProps) => {
+export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const [url, setURL] = useState('');
@@ -47,6 +48,17 @@ export const Item = ({ name, price, imageId, salerName }: ItemProps) => {
       .catch((err) => console.log(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onPurchase = (itemId: string, count: number) => {
+    count = 1;
+    if (window.localStorage) {
+      const defaultItemsJson = localStorage.getItem('purchasedItems');
+      const defaultItems = (defaultItemsJson == null) ? [] : JSON.parse(defaultItemsJson)
+      const purchasedItems = [...defaultItems, {id: itemId, count: count}];
+      let purchasedItemsJson = JSON.stringify(purchasedItems, undefined, 1);
+    localStorage.setItem('purchasedItems', purchasedItemsJson);
+    }
+  }
 
   return (
     <>
@@ -65,7 +77,7 @@ export const Item = ({ name, price, imageId, salerName }: ItemProps) => {
             <BuyButtonWrapper>
               <Button
                 text="購入"
-                onClick={() => console.log('購入')}
+                onClick={() => onPurchase(id)}
               />
             </BuyButtonWrapper>
           </ModalRight>
@@ -75,7 +87,7 @@ export const Item = ({ name, price, imageId, salerName }: ItemProps) => {
         <MaximizeButton onClick={() => setIsOpen(true)}>
           <Maximize2 />
         </MaximizeButton>
-        <CartButton onClick={() => console.log('cart in!')}>
+        <CartButton onClick={() => onPurchase(id)}>
           <ShoppingCart />
         </CartButton>
         <StyledImageButton onClick={() => setIsOpen(true)}>
