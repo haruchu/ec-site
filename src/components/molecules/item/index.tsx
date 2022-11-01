@@ -61,9 +61,14 @@ export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
     }
   };
 
+  const onModalClose = () => {
+    setCount(1);
+    setIsOpen(false);
+  }
+
   return (
     <>
-      <StyledModal isOpen={modalIsOpen} onRequestClose={() => setIsOpen(false)} style={modalStyle}>
+      <StyledModal isOpen={modalIsOpen} onRequestClose={() => onModalClose()} style={modalStyle}>
         <ModalWrapper>
           <ModalCloseButton onClick={() => setIsOpen(false)}>
             <X />
