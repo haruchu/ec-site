@@ -6,10 +6,12 @@ export const Wrapper = styled.div`
   gap: 8px;
 `;
 
-export const CountContent = styled.span`
+export const CountContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 20px;
   height: 20px;
-  text-align: center;
   padding: 20px;
   border-radius: 8px;
   background: #e8d7f4;

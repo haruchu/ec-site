@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof Count> = () => {
   const [count, setCount] = useState(0);
   const props = {
     count: count,
-    onChange: (count) => setCount(count)
+    onChange: (count) => setCount(count),
   };
 
   return <Count {...props} />;

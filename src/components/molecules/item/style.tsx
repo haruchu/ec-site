@@ -1,7 +1,8 @@
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
-import { tablet } from '../../../valiables/BreakPoint';
+import { phone, tablet } from '../../../valiables/BreakPoint';
 import { COLOR } from '../../../valiables/Color';
+import { Button } from '../button';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -186,8 +187,15 @@ export const ModalItemPrice = styled.p`
 `;
 
 export const BuyButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
   margin-top: 60px;
-  & button {
-    width: 200px;
-  }
+  ${phone`
+    flex-direction: column;
+  `}
+`;
+
+export const StyledButton = styled(Button)`
+  width: 200px;
 `;

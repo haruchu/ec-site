@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ShoppingCart, Maximize2, X } from 'react-feather';
 import { storage } from '../../../../firebase/firebase';
-import { Button } from '../button';
+import { Count } from '../count';
 
 import {
   CartButton,
@@ -25,6 +25,7 @@ import {
   ModalWrapper,
   ModalCloseButton,
   BuyButtonWrapper,
+  StyledButton,
 } from './style';
 type ItemProps = {
   id: string;
@@ -36,6 +37,7 @@ type ItemProps = {
 
 export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [count, setCount] = useState(0);
   const router = useRouter();
   const [url, setURL] = useState('');
 
@@ -50,15 +52,14 @@ export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
   }, []);
 
   const onPurchase = (itemId: string, count: number) => {
-    count = 1;
     if (window.localStorage) {
       const defaultItemsJson = localStorage.getItem('purchasedItems');
-      const defaultItems = (defaultItemsJson == null) ? [] : JSON.parse(defaultItemsJson)
-      const purchasedItems = [...defaultItems, {id: itemId, count: count}];
+      const defaultItems = defaultItemsJson == null ? [] : JSON.parse(defaultItemsJson);
+      const purchasedItems = [...defaultItems, { id: itemId, count: count }];
       let purchasedItemsJson = JSON.stringify(purchasedItems, undefined, 1);
-    localStorage.setItem('purchasedItems', purchasedItemsJson);
+      localStorage.setItem('purchasedItems', purchasedItemsJson);
     }
-  }
+  };
 
   return (
     <>
@@ -75,10 +76,8 @@ export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
             <ModalSeller onClick={() => router.push(`/list/${salerName}`)}>{salerName}</ModalSeller>
             <ModalItemPrice>{price}</ModalItemPrice>
             <BuyButtonWrapper>
-              <Button
-                text="購入"
-                onClick={() => onPurchase(id)}
-              />
+              <Count count={count} onChange={setCount} />
+              <StyledButton text='購入' onClick={() => onPurchase(id, count)} />
             </BuyButtonWrapper>
           </ModalRight>
         </ModalWrapper>
@@ -87,7 +86,7 @@ export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
         <MaximizeButton onClick={() => setIsOpen(true)}>
           <Maximize2 />
         </MaximizeButton>
-        <CartButton onClick={() => onPurchase(id)}>
+        <CartButton onClick={() => onPurchase(id, count)}>
           <ShoppingCart />
         </CartButton>
         <StyledImageButton onClick={() => setIsOpen(true)}>
