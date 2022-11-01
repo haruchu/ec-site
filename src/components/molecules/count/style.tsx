@@ -27,14 +27,14 @@ export const CountButton = styled.button`
   height: 20px;
   padding: 20px;
   border-radius: 20px;
-  background: #e8d7f4;
-  box-shadow: 9px 9px 18px #a297ab, -9px -9px 18px #ffffff;
   border: none;
+  background: linear-gradient(145deg, #f8e6ff, #d1c2dc);
+  box-shadow: 10px 10px 20px #c8b9d2, -10px -10px 20px #fff5ff;
   &:hover {
-    box-shadow: 5px 5px 10px #a297ab, -5px -5px 10px #ffffff;
+    box-shadow: 5px 5px 10px #c8b9d2, -5px -5px 10px #fff5ff;
   }
 
-  & span{
+  & span {
     width: 24px;
     height: 24px;
   }
