@@ -1,23 +1,22 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { db, storage } from '../../firebase/firebase';
-import { Button } from '../components/button';
-import { Input } from '../components/input';
+import { Button } from '../components/molecules/button';
+import { Input } from '../components/molecules/input';
+import { getUserInfo } from '../hooks/user';
 import {
   ErrorMessage,
   FormContent,
   FormDropZone,
   FormImage,
-  FormInput,
   FormLabel,
   FormWrapper,
-  SubmitButton,
   Wrapper,
-} from '../styles/Upload';
+} from '../styles/Form';
 import { getStringFromDate } from './api/item';
 
 type FormValues = {
@@ -29,7 +28,18 @@ const Upload: NextPage = () => {
   const [myFiles, setMyFiles] = useState<File[]>([]);
   const [hasNotFile, setHasNotFile] = useState(false);
   const [src, setSrc] = useState('');
+  const [userName, setUserName] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    getUserInfo().then((data) => {
+      console.log(data[0]);
+      setUserName(data[0].name);
+    });
+    console.log(userName);
+    // マウント次のみ実行したいので許容する
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const allowImageFileType = ['image/png', 'image/jpeg'];
@@ -69,6 +79,7 @@ const Upload: NextPage = () => {
       name: data.name,
       price: data.price,
       imageId: CurrentDate,
+      saler: userName,
       uploadDate: CurrentDate,
     };
     docRef.set(insertData);
@@ -106,14 +117,14 @@ const Upload: NextPage = () => {
       <FormWrapper>
         <FormContent>
           <FormLabel>商品名</FormLabel>
-          <Input {...register('name', { required: true })} />
+          <Input type='text' {...register('name', { required: true })} />
           {errors.name && errors.name.type === 'required' && (
             <ErrorMessage>商品名が入力されていません</ErrorMessage>
           )}
         </FormContent>
         <FormContent>
           <FormLabel>価格</FormLabel>
-          <Input {...register('price', { required: true, pattern: /\d+/i })} />
+          <Input type='text' {...register('price', { required: true, pattern: /\d+/i })} />
           {errors.price && errors.price.type === 'required' && (
             <ErrorMessage>価格が入力されていません</ErrorMessage>
           )}
