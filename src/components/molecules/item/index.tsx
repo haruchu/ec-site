@@ -26,6 +26,7 @@ import {
   ModalCloseButton,
   BuyButtonWrapper,
   StyledButton,
+  SalerWrapper,
 } from './style';
 type ItemProps = {
   id: string;
@@ -64,7 +65,7 @@ export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
   const onModalClose = () => {
     setCount(1);
     setIsOpen(false);
-  }
+  };
 
   return (
     <>
@@ -78,7 +79,11 @@ export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
           </ModalLeft>
           <ModalRight>
             <ModalItemName>{name}</ModalItemName>
-            <ModalSeller onClick={() => router.push(`/list/${salerName}`)}>{salerName}</ModalSeller>
+            <SalerWrapper>
+              <ModalSeller onClick={() => router.push(`/list/${salerName}`)}>
+                {salerName}
+              </ModalSeller>
+            </SalerWrapper>
             <ModalItemPrice>{price * count}</ModalItemPrice>
             <BuyButtonWrapper>
               <Count count={count} onChange={setCount} />

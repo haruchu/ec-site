@@ -9,7 +9,7 @@ export default {
 };
 
 const Template: ComponentStory<typeof Count> = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const props = {
     count: count,
     onChange: (count) => setCount(count),

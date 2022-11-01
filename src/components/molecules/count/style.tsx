@@ -33,4 +33,9 @@ export const CountButton = styled.button`
   &:hover {
     box-shadow: 5px 5px 10px #a297ab, -5px -5px 10px #ffffff;
   }
+
+  & span{
+    width: 24px;
+    height: 24px;
+  }
 `;
