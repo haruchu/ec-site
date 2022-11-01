@@ -37,7 +37,7 @@ type ItemProps = {
 
 export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const router = useRouter();
   const [url, setURL] = useState('');
 
@@ -74,10 +74,10 @@ export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
           <ModalRight>
             <ModalItemName>{name}</ModalItemName>
             <ModalSeller onClick={() => router.push(`/list/${salerName}`)}>{salerName}</ModalSeller>
-            <ModalItemPrice>{price}</ModalItemPrice>
+            <ModalItemPrice>{price * count}</ModalItemPrice>
             <BuyButtonWrapper>
               <Count count={count} onChange={setCount} />
-              <StyledButton text='購入' onClick={() => onPurchase(id, count)} />
+              <StyledButton text='カートに入れる' onClick={() => onPurchase(id, count)} />
             </BuyButtonWrapper>
           </ModalRight>
         </ModalWrapper>
