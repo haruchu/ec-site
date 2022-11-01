@@ -42,7 +42,11 @@ const Home: NextPage = ({ defaultItems }: ListProps) => {
         <title>商品リスト</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <ListLayout items={items} loadMore={loadMore} hasMore={hasMore} />
+      {items.length !== 0 ? (
+        <ListLayout items={items} loadMore={loadMore} hasMore={hasMore} />
+      ) : (
+        <>ありません</>
+      )}
     </Wrapper>
   );
 };

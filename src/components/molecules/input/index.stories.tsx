@@ -22,7 +22,7 @@ export const Test = () => {
   const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Input {...register('test')} />
+      <Input {...register('test')} type="text"/>
       <input type='submit' />
     </form>
   );
