@@ -1,16 +1,12 @@
-import ReactModal from 'react-modal';
 import styled from 'styled-components';
-import { phone, tablet } from '../../../valiables/BreakPoint';
-import { COLOR } from '../../../valiables/Color';
-import { Button } from '../button';
-import { ButtonWrapper } from '../item/style';
+import { phone } from '../../../valiables/BreakPoint';
+
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
   position: relative;
-  width: 70%;
-  height: 150px;
-  padding: 20px 80px 20px 20px;
+  width: 80%;
+  padding: 20px;
   background: #e8d7f4;
   box-shadow: 9px 9px 18px #cabbd4, -9px -9px 18px #fff3ff;
   display: flex;
@@ -19,6 +15,10 @@ export const Wrapper = styled.div`
   gap: 20px;
   border-radius: 16px;
   cursor: pointer;
+  ${phone`
+    width: 100%;
+    padding: 10px;
+  `}
 `;
 
 export const StyledImage = styled.img`
@@ -26,9 +26,13 @@ export const StyledImage = styled.img`
   height: 100px;
   object-fit: cover;
   border-radius: 16px;
-
   box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
     rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+  ${phone`
+    width: 50px;
+    height: 50px;
+  `}
 `;
 
 export const ItemInfo = styled.span`
@@ -36,6 +40,7 @@ export const ItemInfo = styled.span`
   display: flex;
   gap: 20px;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const Text = styled.span`
@@ -44,16 +49,39 @@ export const Text = styled.span`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   font-size: 20px;
+  ${phone`
+    font-size: 16px;
+  `}
+`;
+
+export const RightParts = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const Price = styled.span`
   font-size: 28px;
+  ${phone`
+    font-size: 20px;
+  `}
 `;
 
-export const DeleteButton = styled(ButtonWrapper)`
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
+export const DeleteButton = styled.button`
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: transparent;
+  border: 2px dotted gray;
+  &:hover {
+    border: 2px solid gray;
+  }
+  border-radius: 50%;
+
+  & svg {
+    width: 16px;
+    height: 16px;
+  }
 `;

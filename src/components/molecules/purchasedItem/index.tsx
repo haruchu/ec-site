@@ -19,7 +19,7 @@ import {
   BuyButtonWrapper,
   StyledButton,
 } from '../item/style';
-import { Wrapper, StyledImage, Text, Price, ItemInfo, DeleteButton } from './style';
+import { Wrapper, StyledImage, Text, Price, ItemInfo, DeleteButton, RightParts } from './style';
 
 type ItemProps = {
   id: string;
@@ -89,11 +89,13 @@ export const PurchasedItem = ({ id, name, price, imageId, salerName }: ItemProps
         <StyledImage src={url} />
         <ItemInfo>
           <Text>{name}</Text>
-          <Price>{price}</Price>
+          <RightParts>
+            <Price>{price}</Price>
+            <DeleteButton onClick={() => console.log('Delete')}>
+              <X />
+            </DeleteButton>
+          </RightParts>
         </ItemInfo>
-        <DeleteButton onClick={() => console.log('Delete')}>
-          <X />
-        </DeleteButton>
       </Wrapper>
     </>
   );
