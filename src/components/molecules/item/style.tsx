@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
   align-items: center;
   border-radius: 16px;
 `;
+
 export const ButtonWrapper = styled.button`
   cursor: pointer;
   display: flex;

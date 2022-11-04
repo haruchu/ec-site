@@ -1,13 +1,13 @@
 import { ComponentStory } from '@storybook/react';
 
-import { Item } from './index';
+import { PurchasedItem } from './index';
 
 export default {
-  title: 'components/Item',
-  component: Item,
+  title: 'components/PurchasedItem',
+  component: PurchasedItem,
 };
 
-const Template: ComponentStory<typeof Item> = (args) => <Item {...args} />;
+const Template: ComponentStory<typeof PurchasedItem> = (args) => <PurchasedItem {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
