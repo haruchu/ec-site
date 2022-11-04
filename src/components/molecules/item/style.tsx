@@ -1,7 +1,8 @@
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
-import { tablet } from '../../../valiables/BreakPoint';
+import { phone, tablet } from '../../../valiables/BreakPoint';
 import { COLOR } from '../../../valiables/Color';
+import { Button } from '../button';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -15,6 +16,7 @@ export const Wrapper = styled.div`
   align-items: center;
   border-radius: 16px;
 `;
+
 export const ButtonWrapper = styled.button`
   cursor: pointer;
   display: flex;
@@ -158,13 +160,22 @@ export const ModalItemName = styled.p`
   font-size: 36px;
 `;
 
-export const ModalSeller = styled.p`
+export const SalerWrapper = styled.div`
   width: 100%;
-  margin: 8px;
+  display: flex;
+  align-items: flex-start;
+`;
+
+export const ModalSeller = styled.span`
+  margin: 0;
   padding: 8px;
-  border-bottom: 2px solid gray;
-  color: skyblue;
+  color: #31c4fe;
   cursor: pointer;
+  transition: 0.5s;
+
+  &:hover {
+    opacity: 0.3;
+  }
 
   &::before {
     content: '出品者：';
@@ -175,8 +186,10 @@ export const ModalSeller = styled.p`
 export const ModalItemPrice = styled.p`
   width: 100%;
   font-size: 26px;
-  margin: 8px;
+  margin: 0;
+  padding: 8px;
   text-align: end;
+  border-top: 2px solid gray;
 
   &::before {
     content: '¥';
@@ -186,8 +199,15 @@ export const ModalItemPrice = styled.p`
 `;
 
 export const BuyButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
   margin-top: 60px;
-  & button {
-    width: 200px;
-  }
+  ${phone`
+    flex-direction: column;
+  `}
+`;
+
+export const StyledButton = styled(Button)`
+  width: 200px;
 `;

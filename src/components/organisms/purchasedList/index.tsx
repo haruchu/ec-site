@@ -5,6 +5,7 @@ import { db } from '../../../../firebase/firebase';
 import { Wrapper } from '../../../styles/Form';
 import { StyledInfiniteScroll } from '../../../styles/List';
 import { Item } from '../../molecules/item';
+import { PurchasedItem } from '../../molecules/purchasedItem';
 
 export type ItemType = {
   id: string;
@@ -21,11 +22,11 @@ type ListLayoutProps = {
   hasMore: boolean;
 };
 
-const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
+const PurchasedListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
   return (
     <StyledInfiniteScroll loadMore={loadMore} hasMore={hasMore}>
       {items.map((item, index) => (
-        <Item
+        <PurchasedItem
           key={index}
           id={item.id}
           name={item.name}
@@ -38,4 +39,4 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
   );
 };
 
-export default ListLayout;
+export default PurchasedListLayout;

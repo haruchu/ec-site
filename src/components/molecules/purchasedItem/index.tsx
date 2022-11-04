@@ -1,33 +1,26 @@
 import { getDownloadURL, ref } from 'firebase/storage';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { ShoppingCart, Maximize2, X } from 'react-feather';
+import { X } from 'react-feather';
 import { storage } from '../../../../firebase/firebase';
 import { Count } from '../count';
-
 import {
-  CartButton,
-  ItemInfo,
-  MaximizeButton,
-  modalStyle,
   StyledModal,
-  StyledImage,
-  StyledImageButton,
-  StyledName,
-  StyledPrice,
-  Wrapper,
-  ModalLeft,
-  ModalRight,
-  ModalImage,
-  ModalItemName,
-  ModalItemPrice,
-  ModalSeller,
+  modalStyle,
   ModalWrapper,
   ModalCloseButton,
+  ModalLeft,
+  ModalImage,
+  ModalRight,
+  ModalItemName,
+  SalerWrapper,
+  ModalSeller,
+  ModalItemPrice,
   BuyButtonWrapper,
   StyledButton,
-  SalerWrapper,
-} from './style';
+} from '../item/style';
+import { Wrapper, StyledImage, Text, Price, ItemInfo, DeleteButton, RightParts } from './style';
+
 type ItemProps = {
   id: string;
   name: string;
@@ -36,7 +29,7 @@ type ItemProps = {
   salerName: string;
 };
 
-export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
+export const PurchasedItem = ({ id, name, price, imageId, salerName }: ItemProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [count, setCount] = useState(1);
   const router = useRouter();
@@ -92,19 +85,16 @@ export const Item = ({ id, name, price, imageId, salerName }: ItemProps) => {
           </ModalRight>
         </ModalWrapper>
       </StyledModal>
-      <Wrapper>
-        <MaximizeButton onClick={() => setIsOpen(true)}>
-          <Maximize2 />
-        </MaximizeButton>
-        <CartButton onClick={() => onPurchase(id, count)}>
-          <ShoppingCart />
-        </CartButton>
-        <StyledImageButton onClick={() => setIsOpen(true)}>
-          <StyledImage src={url} />
-        </StyledImageButton>
+      <Wrapper onClick={() => setIsOpen(true)}>
+        <StyledImage src={url} />
         <ItemInfo>
-          <StyledName>{name}</StyledName>
-          <StyledPrice>{price}</StyledPrice>
+          <Text>{name}</Text>
+          <RightParts>
+            <Price>{price}</Price>
+            <DeleteButton onClick={() => console.log('Delete')}>
+              <X />
+            </DeleteButton>
+          </RightParts>
         </ItemInfo>
       </Wrapper>
     </>

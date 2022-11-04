@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { v4 } from 'uuid';
 import { db, storage } from '../../firebase/firebase';
 import { Button } from '../components/molecules/button';
 import { Input } from '../components/molecules/input';
@@ -71,11 +72,13 @@ const Upload: NextPage = () => {
       return;
     }
 
+    const uuid = v4();
     const date = new Date();
     const CurrentDate = getStringFromDate(date);
     storage.ref(`/images/hoge/${CurrentDate}.png`).put(myFiles[0]);
     const docRef = db.collection('items').doc();
     const insertData = {
+      id: uuid,
       name: data.name,
       price: data.price,
       imageId: CurrentDate,
