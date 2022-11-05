@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { X } from 'react-feather';
 import { storage } from '../../../../firebase/firebase';
 import { StyledInfiniteScroll } from '../../../styles/List';
-import { Count } from '../../molecules/count';
 import {
   StyledModal,
   modalStyle,
@@ -35,9 +34,10 @@ type ListLayoutProps = {
   items: ItemType[];
   loadMore: () => Promise<void>;
   hasMore: boolean;
+  onCartOut: (id: string) => void;
 };
 
-const PurchasedListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
+const PurchasedListLayout = ({ items, loadMore, hasMore, onCartOut }: ListLayoutProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [count, setCount] = useState(1);
   const [id, setId] = useState('');
@@ -75,6 +75,12 @@ const PurchasedListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
     setCount(1);
     setIsOpen(false);
   };
+
+  const onLayoutCartOut = (id: string) => {
+    onCartOut(id);
+    setIsOpen(false);
+  };
+
   return (
     <>
       <StyledModal isOpen={modalIsOpen} onRequestClose={() => onModalClose()} style={modalStyle}>
@@ -94,8 +100,7 @@ const PurchasedListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
             </SalerWrapper>
             <ModalItemPrice>{price * count}</ModalItemPrice>
             <BuyButtonWrapper>
-              {/* <Count count={count} onChange={setCount} />
-              <StyledButton text='カートに入れる' onClick={() => onModalCartIn(id, count)} /> */}
+              <StyledButton text='カートから外す' onClick={() => onLayoutCartOut(id)} />
             </BuyButtonWrapper>
           </ModalRight>
         </ModalWrapper>
@@ -112,6 +117,7 @@ const PurchasedListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
             onModalOpen={() =>
               onModalOpen(item.id, item.name, item.price, item.saler, item.imageId)
             }
+            onCarOut={() => onLayoutCartOut(item.id)}
           />
         ))}
       </StyledInfiniteScroll>

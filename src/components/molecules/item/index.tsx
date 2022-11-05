@@ -1,11 +1,9 @@
 import { getDownloadURL, ref } from 'firebase/storage';
 import { useEffect, useState } from 'react';
-import { ShoppingCart, Maximize2, X } from 'react-feather';
+import { Maximize2 } from 'react-feather';
 import { storage } from '../../../../firebase/firebase';
-import { onCartIn } from '../../organisms/itemList';
 
 import {
-  CartButton,
   ItemInfo,
   MaximizeButton,
   StyledImage,
@@ -15,14 +13,13 @@ import {
   Wrapper,
 } from './style';
 type ItemProps = {
-  id: string;
   name: string;
   price: number;
   imageId: string;
   onModalOpen: () => void;
 };
 
-export const Item = ({ id, name, price, imageId, onModalOpen }: ItemProps) => {
+export const Item = ({ name, price, imageId, onModalOpen }: ItemProps) => {
   const [url, setURL] = useState('');
 
   useEffect(() => {
@@ -41,9 +38,6 @@ export const Item = ({ id, name, price, imageId, onModalOpen }: ItemProps) => {
         <MaximizeButton onClick={() => onModalOpen()}>
           <Maximize2 />
         </MaximizeButton>
-        <CartButton onClick={() => onCartIn(id, 1)}>
-          <ShoppingCart />
-        </CartButton>
         <StyledImageButton onClick={() => onModalOpen()}>
           <StyledImage src={url} />
         </StyledImageButton>

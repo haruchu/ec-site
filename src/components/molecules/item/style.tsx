@@ -37,7 +37,7 @@ export const ButtonWrapper = styled.button`
   }
 `;
 
-export const CartButton = styled(ButtonWrapper)`
+export const CartInOutButton = styled(ButtonWrapper)`
   top: 14px;
   right: 14px;
 `;

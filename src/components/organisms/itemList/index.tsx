@@ -3,6 +3,7 @@ import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { X } from 'react-feather';
 import { storage } from '../../../../firebase/firebase';
+import { onCartInFunc, onCartOutFunc } from '../../../hooks/purchase';
 import { StyledInfiniteScroll } from '../../../styles/List';
 import { Count } from '../../molecules/count';
 import { Item } from '../../molecules/item';
@@ -37,16 +38,6 @@ type ListLayoutProps = {
   hasMore: boolean;
 };
 
-export const onCartIn = (itemId: string, count: number) => {
-  if (window.localStorage) {
-    const defaultItemsJson = localStorage.getItem('purchasedItems');
-    const defaultItems = defaultItemsJson == null ? [] : JSON.parse(defaultItemsJson);
-    const purchasedItems = [...defaultItems, { id: itemId, count: count }];
-    let purchasedItemsJson = JSON.stringify(purchasedItems, undefined, 1);
-    localStorage.setItem('purchasedItems', purchasedItemsJson);
-  }
-};
-
 const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [count, setCount] = useState(1);
@@ -56,6 +47,20 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
   const [salerName, setSalerName] = useState('');
   const [imageId, setImageId] = useState('');
   const [url, setURL] = useState('');
+  const [cartItems, setCartItems] = useState<string[]>([]);
+  const [isCarted, setIsCarted] = useState(false);
+
+  const refreshCartItems = () => {
+    const purchasedItemsInfoJson = localStorage.getItem('purchasedItems');
+    const purchasedItemsInfo =
+      purchasedItemsInfoJson == null ? [] : JSON.parse(purchasedItemsInfoJson);
+    setCartItems(purchasedItemsInfo.map((item) => item.id));
+  };
+
+  useEffect(() => {
+    refreshCartItems();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const gsReference = ref(storage, `gs://ec-0831.appspot.com/images/hoge/${imageId}.png`);
@@ -76,18 +81,26 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
     setId(id);
     setName(name);
     setPrice(price);
+    setCount(1);
     setSalerName(salerName);
     setImageId(imageId);
     setIsOpen(true);
+    setIsCarted(cartItems.includes(id));
   };
 
   const onModalClose = () => {
-    setCount(1);
     setIsOpen(false);
   };
 
-  const onModalCartIn = (id: string, count: number) => {
-    onCartIn(id, count);
+  const onLayoutCartIn = (id: string, count: number) => {
+    onCartInFunc(id, count);
+    refreshCartItems();
+    setIsOpen(false);
+  };
+
+  const onLayoutCartOut = (id: string) => {
+    onCartOutFunc(id);
+    refreshCartItems();
     setIsOpen(false);
   };
 
@@ -110,8 +123,14 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
             </SalerWrapper>
             <ModalItemPrice>{price * count}</ModalItemPrice>
             <BuyButtonWrapper>
-              <Count count={count} onChange={setCount} />
-              <StyledButton text='カートに入れる' onClick={() => onModalCartIn(id, count)} />
+              {isCarted ? (
+                <StyledButton text='カートから外す' onClick={() => onLayoutCartOut(id)} />
+              ) : (
+                <>
+                  <Count count={count} onChange={setCount} />
+                  <StyledButton text='カートに入れる' onClick={() => onLayoutCartIn(id, count)} />
+                </>
+              )}
             </BuyButtonWrapper>
           </ModalRight>
         </ModalWrapper>

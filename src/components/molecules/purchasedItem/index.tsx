@@ -11,9 +11,10 @@ type ItemProps = {
   imageId: string;
   salerName: string;
   onModalOpen: () => void;
+  onCarOut: () => void;
 };
 
-export const PurchasedItem = ({ name, price, imageId, onModalOpen }: ItemProps) => {
+export const PurchasedItem = ({ name, price, imageId, onCarOut }: ItemProps) => {
   const [url, setURL] = useState('');
 
   useEffect(() => {
@@ -28,13 +29,13 @@ export const PurchasedItem = ({ name, price, imageId, onModalOpen }: ItemProps) 
 
   return (
     <>
-      <Wrapper onClick={() => onModalOpen()}>
+      <Wrapper>
         <StyledImage src={url} />
         <ItemInfo>
           <Text>{name}</Text>
           <RightParts>
             <Price>{price}</Price>
-            <DeleteButton onClick={() => console.log('Delete')}>
+            <DeleteButton onClick={() => onCarOut()}>
               <X />
             </DeleteButton>
           </RightParts>

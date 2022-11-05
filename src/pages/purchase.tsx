@@ -2,25 +2,32 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { db } from '../../firebase/firebase';
-import ListLayout, { ItemType } from '../components/organisms/itemList';
+import { ItemType } from '../components/organisms/itemList';
 import PurchasedListLayout from '../components/organisms/purchasedList';
+import { onCartOutFunc } from '../hooks/purchase';
 import { Wrapper } from '../styles/Share';
-
-type ListProps = {
-  salerName: string;
-  defaultItems: ItemType[];
-};
 
 const PERITEM = 4;
 
-const Home: NextPage = ({ defaultItems }: ListProps) => {
+const Cart: NextPage = () => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-  const [purchasedIds, setPurchasedIds] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+
+  const refreshCartItems = () => {
+    const purchasedItemsInfoJson = localStorage.getItem('purchasedItems');
+    const purchasedItemsInfo =
+      purchasedItemsInfoJson == null ? [] : JSON.parse(purchasedItemsInfoJson);
+    setCartItems(purchasedItemsInfo.map((item) => item.id));
+  };
+
+  useEffect(() => {
+    refreshCartItems();
+  }, []);
 
   const loadMore = async () => {
     db.collection('items')
-      .where('id', 'in', purchasedIds)
+      .where('id', 'in', cartItems)
       .orderBy('uploadDate', 'desc')
       .limit(1)
       .startAfter(items[items.length - 1].uploadDate)
@@ -40,25 +47,19 @@ const Home: NextPage = ({ defaultItems }: ListProps) => {
   };
 
   const get = async () => {
-    if (window.localStorage) {
-      const purchasedItemsInfoJson = localStorage.getItem('purchasedItems');
-      const purchasedItemsInfo =
-        purchasedItemsInfoJson == null ? [] : JSON.parse(purchasedItemsInfoJson);
-      purchasedItemsInfo.map((item) => purchasedIds.push(item.id));
-      if (purchasedIds && purchasedIds.length > 0) {
-        const colRef = db
-          .collection('items')
-          .where('id', 'in', purchasedIds)
-          .orderBy('uploadDate', 'desc')
-          .limit(PERITEM);
-        const cardSnap = await colRef.get();
-        const purchasedItems = cardSnap.docs.map((doc) => ({
-          ...doc.data(),
-        }));
-        return purchasedItems;
-      } else {
-        return [];
-      }
+    if (cartItems && cartItems.length > 0) {
+      const colRef = db
+        .collection('items')
+        .where('id', 'in', cartItems)
+        .orderBy('uploadDate', 'desc')
+        .limit(PERITEM);
+      const cardSnap = await colRef.get();
+      const purchasedItems = cardSnap.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+      return purchasedItems;
+    } else {
+      return [];
     }
   };
 
@@ -78,7 +79,14 @@ const Home: NextPage = ({ defaultItems }: ListProps) => {
         setItems([...items, ...newItems]);
       }
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartItems]);
+
+  const onCartOut = (id: string) => {
+    onCartOutFunc(id);
+    setItems([]);
+    refreshCartItems();
+  };
 
   return (
     <Wrapper>
@@ -87,7 +95,12 @@ const Home: NextPage = ({ defaultItems }: ListProps) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       {items.length !== 0 ? (
-        <PurchasedListLayout items={items} loadMore={loadMore} hasMore={hasMore} />
+        <PurchasedListLayout
+          items={items}
+          loadMore={loadMore}
+          hasMore={hasMore}
+          onCartOut={(id) => onCartOut(id)}
+        />
       ) : (
         <>ありません</>
       )}
@@ -95,4 +108,4 @@ const Home: NextPage = ({ defaultItems }: ListProps) => {
   );
 };
 
-export default Home;
+export default Cart;
