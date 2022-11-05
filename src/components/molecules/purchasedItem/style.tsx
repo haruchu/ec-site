@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { phone } from '../../../valiables/BreakPoint';
 
-
 export const Wrapper = styled.div`
   box-sizing: border-box;
   position: relative;
