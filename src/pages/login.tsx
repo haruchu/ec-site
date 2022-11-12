@@ -34,7 +34,10 @@ const Login: NextPage = () => {
     console.log(userData);
     if (userData.length > 0) {
       signin(userData[0].id, data.name, data.password);
-      router.push('/list');
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('userName', data.name);
+      }
+      router.push('/');
     } else {
       router.push('/404');
     }

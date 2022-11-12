@@ -18,3 +18,12 @@ export const StyledInfiniteScroll = styled(InfiniteScroll)`
   `}
   margin: 40px 20px;
 `;
+
+export const SalerName = styled.h2`
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+`;

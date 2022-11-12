@@ -2,11 +2,7 @@ import { ref, getDownloadURL } from 'firebase/storage';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import { X } from 'react-feather';
-import { storage } from '../../../../firebase/firebase';
-import { onCartInFunc, onCartOutFunc } from '../../../hooks/purchase';
-import { StyledInfiniteScroll } from '../../../styles/List';
-import { Count } from '../../molecules/count';
-import { Item } from '../../molecules/item';
+import { storage } from '../../firebase/firebase';
 import {
   StyledModal,
   modalStyle,
@@ -21,7 +17,9 @@ import {
   ModalItemPrice,
   BuyButtonWrapper,
   StyledButton,
-} from '../../molecules/item/style';
+} from '../components/molecules/item/style';
+import { PurchasedItem } from '../components/molecules/purchasedItem';
+import { StyledInfiniteScroll } from '../styles/List';
 
 export type ItemType = {
   id: string;
@@ -36,9 +34,10 @@ type ListLayoutProps = {
   items: ItemType[];
   loadMore: () => Promise<void>;
   hasMore: boolean;
+  onCartOut: (id: string) => void;
 };
 
-const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
+const PurchasedListLayout = ({ items, loadMore, hasMore, onCartOut }: ListLayoutProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [count, setCount] = useState(1);
   const [id, setId] = useState('');
@@ -47,20 +46,6 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
   const [salerName, setSalerName] = useState('');
   const [imageId, setImageId] = useState('');
   const [url, setURL] = useState('');
-  const [cartItems, setCartItems] = useState<string[]>([]);
-  const [isCarted, setIsCarted] = useState(false);
-
-  const refreshCartItems = () => {
-    const purchasedItemsInfoJson = localStorage.getItem('purchasedItems');
-    const purchasedItemsInfo =
-      purchasedItemsInfoJson == null ? [] : JSON.parse(purchasedItemsInfoJson);
-    setCartItems(purchasedItemsInfo.map((item) => item.id));
-  };
-
-  useEffect(() => {
-    refreshCartItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const gsReference = ref(storage, `gs://ec-0831.appspot.com/images/hoge/${imageId}.png`);
@@ -81,26 +66,18 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
     setId(id);
     setName(name);
     setPrice(price);
-    setCount(1);
     setSalerName(salerName);
     setImageId(imageId);
     setIsOpen(true);
-    setIsCarted(cartItems.includes(id));
   };
 
   const onModalClose = () => {
-    setIsOpen(false);
-  };
-
-  const onLayoutCartIn = (id: string, count: number) => {
-    onCartInFunc(id, count);
-    refreshCartItems();
+    setCount(1);
     setIsOpen(false);
   };
 
   const onLayoutCartOut = (id: string) => {
-    onCartOutFunc(id);
-    refreshCartItems();
+    onCartOut(id);
     setIsOpen(false);
   };
 
@@ -117,34 +94,30 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
           <ModalRight>
             <ModalItemName>{name}</ModalItemName>
             <SalerWrapper>
-              <ModalSeller onClick={() => router.push(`/list/${salerName}`)}>
+              <ModalSeller onClick={() => router.push(`/profile/${salerName}`)}>
                 {salerName}
               </ModalSeller>
             </SalerWrapper>
             <ModalItemPrice>{price * count}</ModalItemPrice>
             <BuyButtonWrapper>
-              {isCarted ? (
-                <StyledButton text='カートから外す' onClick={() => onLayoutCartOut(id)} />
-              ) : (
-                <>
-                  <Count count={count} onChange={setCount} />
-                  <StyledButton text='カートに入れる' onClick={() => onLayoutCartIn(id, count)} />
-                </>
-              )}
+              <StyledButton text='カートから外す' onClick={() => onLayoutCartOut(id)} />
             </BuyButtonWrapper>
           </ModalRight>
         </ModalWrapper>
       </StyledModal>
       <StyledInfiniteScroll loadMore={loadMore} hasMore={hasMore}>
         {items.map((item, index) => (
-          <Item
+          <PurchasedItem
             key={index}
+            id={item.id}
             name={item.name}
             price={item.price}
             imageId={item.imageId}
+            salerName={item.saler}
             onModalOpen={() =>
               onModalOpen(item.id, item.name, item.price, item.saler, item.imageId)
             }
+            onCarOut={() => onLayoutCartOut(item.id)}
           />
         ))}
       </StyledInfiniteScroll>
@@ -152,4 +125,4 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
   );
 };
 
-export default ListLayout;
+export default PurchasedListLayout;
