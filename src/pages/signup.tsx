@@ -1,9 +1,8 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { v4 } from 'uuid';
 import { db } from '../../firebase/firebase';
 import { Button } from '../components/molecules/button';
 import { Input } from '../components/molecules/input';
@@ -28,19 +27,18 @@ const Signup: NextPage = () => {
   const router = useRouter();
 
   const handleUpload = async (data: FormValues) => {
-    const uuid = v4();
     const docRef = db.collection('users').doc();
     const insertData = {
-      id: uuid,
       name: data.name,
       password: data.password,
+      point: 1000,
     };
     docRef.set(insertData);
-    signin(uuid, data.name, data.password);
+    signin(data.name, data.password);
     router.push('/');
   };
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => handleUpload(data);
+  const onSubmit: SubmitHandler<FormValues> = (data) => signin(data.name, data.password);
 
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
