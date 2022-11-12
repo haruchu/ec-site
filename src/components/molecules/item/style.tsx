@@ -191,10 +191,8 @@ export const ModalItemPrice = styled.p`
   text-align: end;
   border-top: 2px solid gray;
 
-  &::before {
-    content: '¥';
-    font-size: 16px;
-    margin-right: 8px;
+  &::after {
+    content: 'pt';
   }
 `;
 

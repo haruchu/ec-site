@@ -92,8 +92,8 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
     setIsOpen(false);
   };
 
-  const onLayoutCartIn = (id: string, count: number) => {
-    onCartInFunc(id, count);
+  const onLayoutCartIn = (id: string, price: number, count: number) => {
+    onCartInFunc(id, price, count);
     refreshCartItems();
     setIsOpen(false);
   };
@@ -121,14 +121,17 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
                 {salerName}
               </ModalSeller>
             </SalerWrapper>
-            <ModalItemPrice>{price * count}</ModalItemPrice>
+            {isCarted ? <></> : <ModalItemPrice>{price * count}</ModalItemPrice>}
             <BuyButtonWrapper>
               {isCarted ? (
                 <StyledButton text='カートから外す' onClick={() => onLayoutCartOut(id)} />
               ) : (
                 <>
                   <Count count={count} onChange={setCount} />
-                  <StyledButton text='カートに入れる' onClick={() => onLayoutCartIn(id, count)} />
+                  <StyledButton
+                    text='カートに入れる'
+                    onClick={() => onLayoutCartIn(id, price, count)}
+                  />
                 </>
               )}
             </BuyButtonWrapper>

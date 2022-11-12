@@ -1,12 +1,11 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from '../components/molecules/button';
 import { Input } from '../components/molecules/input';
-import { useAuthDispatchUserContext, useLoggedInContext } from '../contexts/AuthContextProvider';
-import { ErrorMessage, FormContent, FormLabel, FormWrapper, Wrapper } from '../styles/Form';
+import { useAuthDispatchUserContext } from '../contexts/AuthContextProvider';
+import { ErrorMessage, FormContent, FormLabel, Wrapper } from '../styles/Form';
 
 type FormValues = {
   name: string;
@@ -21,7 +20,6 @@ const Login: NextPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-  const router = useRouter();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => signin(data.name, data.password);
 

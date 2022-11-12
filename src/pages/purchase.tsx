@@ -1,8 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { db } from '../../firebase/firebase';
-import { onCartOutFunc } from '../hooks/purchase';
+import { Button } from '../components/molecules/button';
+import { onCartOutFunc, onPurchase } from '../hooks/purchase';
 import { ItemType } from '../layout/itemLayout';
 import PurchasedListLayout from '../layout/purchasedLayout';
 import { Wrapper } from '../styles/Share';
@@ -13,12 +15,21 @@ const Cart: NextPage = () => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [cartItems, setCartItems] = useState([]);
+  const [totalPoint, setTotalPoint] = useState(0);
+  const router = useRouter();
 
   const refreshCartItems = () => {
     const purchasedItemsInfoJson = localStorage.getItem('purchasedItems');
     const purchasedItemsInfo =
       purchasedItemsInfoJson == null ? [] : JSON.parse(purchasedItemsInfoJson);
     setCartItems(purchasedItemsInfo.map((item) => item.id));
+    setTotalPoint(
+      Object.keys(purchasedItemsInfo).reduce(
+        (sum, key) =>
+          sum + parseInt(purchasedItemsInfo[key].price || 0) * purchasedItemsInfo[key].count,
+        0,
+      ),
+    );
   };
 
   useEffect(() => {
@@ -95,12 +106,21 @@ const Cart: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       {items.length !== 0 ? (
-        <PurchasedListLayout
-          items={items}
-          loadMore={loadMore}
-          hasMore={hasMore}
-          onCartOut={(id) => onCartOut(id)}
-        />
+        <>
+          <PurchasedListLayout
+            items={items}
+            loadMore={loadMore}
+            hasMore={hasMore}
+            onCartOut={(id) => onCartOut(id)}
+          />
+          <Button
+            text='購入する'
+            onClick={() => {
+              onPurchase(totalPoint);
+              router.push('/');
+            }}
+          />
+        </>
       ) : (
         <>ありません</>
       )}

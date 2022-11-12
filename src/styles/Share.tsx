@@ -14,3 +14,5 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const Title = styled.h2``;

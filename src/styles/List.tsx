@@ -1,12 +1,13 @@
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import { phone, tablet } from '../valiables/BreakPoint';
-import { COLOR } from '../valiables/Color';
 
 export const StyledInfiniteScroll = styled(InfiniteScroll)`
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   gap: 80px;
