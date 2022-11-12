@@ -2,7 +2,8 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
 import { db } from '../../../firebase/firebase';
-import ListLayout, { ItemType } from '../../components/organisms/itemList';
+import ListLayout, { ItemType } from '../../layout/itemLayout';
+import { SalerName } from '../../styles/List';
 import { Wrapper } from '../../styles/Share';
 
 type ListType = {
@@ -43,6 +44,7 @@ const List: NextPage = ({ salerName, defaultItems }: ListType) => {
         <title>{salerName}の商品リスト</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <SalerName>{salerName}の商品リスト</SalerName>
       {items.length !== 0 ? (
         <ListLayout items={items} loadMore={loadMore} hasMore={hasMore} />
       ) : (

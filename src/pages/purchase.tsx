@@ -2,9 +2,9 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { db } from '../../firebase/firebase';
-import { ItemType } from '../components/organisms/itemList';
-import PurchasedListLayout from '../components/organisms/purchasedList';
 import { onCartOutFunc } from '../hooks/purchase';
+import { ItemType } from '../layout/itemLayout';
+import PurchasedListLayout from '../layout/purchasedLayout';
 import { Wrapper } from '../styles/Share';
 
 const PERITEM = 4;

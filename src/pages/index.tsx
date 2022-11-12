@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
 import { db } from '../../firebase/firebase';
-import ListLayout, { ItemType } from '../components/organisms/itemList';
+import ListLayout, { ItemType } from '../layout/itemLayout';
 import { Wrapper } from '../styles/Share';
 
 type ListProps = {
