@@ -2,12 +2,15 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { AuthContextProvider } from '../contexts/AuthContextProvider';
 import { RouteGuard } from '../contexts/RouteGuard';
+import { Layout } from '../layout/layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthContextProvider>
       <RouteGuard>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </RouteGuard>
     </AuthContextProvider>
   );

@@ -139,7 +139,6 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
         {items.map((item, index) => (
           <Item
             key={index}
-            id={item.id}
             name={item.name}
             price={item.price}
             imageId={item.imageId}
