@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-image: linear-gradient(90deg, rgba(65, 164, 253, 1), rgba(14, 244, 255, 1));
-`;
-
 export const MenuLists = styled.ul`
   position: relative;
   width: 200px;
@@ -15,6 +7,9 @@ export const MenuLists = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
 `;
 
 export const Line = styled.div`
@@ -36,11 +31,12 @@ export const Toggle = styled.button<{ isActive: boolean }>`
   align-content: center;
   cursor: pointer;
   transition: 0.5s;
-  background-color: #fff;
   border: none;
   border-radius: 50%;
   z-index: 99;
-  transform: translateX(-40px);
+  transform: translateX(-20px);
+  background: linear-gradient(145deg, #f8e6ff, #d1c2dc);
+  box-shadow: 5px 5px 34px #b5a8be, -5px -5px 34px #ffffff;
   ${Line} {
     :first-child {
       transform: ${({ isActive }) => (isActive ? `translateY(7px) rotate(-45deg)` : 'rotate(0)')};
@@ -72,8 +68,9 @@ export const Icon = styled.span<{ index: number }>`
   align-items: center;
   width: 40px;
   height: 40px;
-  background: #fff;
   border-radius: 50%;
+  background: linear-gradient(145deg, #f8e6ff, #d1c2dc);
+  box-shadow: 8px 8px 16px #b0a3b9, -8px -8px 16px #ffffff;
   transform: ${({ index }) => `rotate(calc(360deg / -8 * ${index}))`};
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
   color: #000;
