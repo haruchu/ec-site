@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { LogOut, ShoppingCart, User } from 'react-feather';
 import { Menu } from '../components/molecules/menu';
 import { useAuthDispatchUserContext } from '../contexts/AuthContextProvider';
@@ -11,7 +11,7 @@ type LayoutProps = Required<{
 export const Layout = ({ children }: LayoutProps) => {
   const router = useRouter();
   const { signout } = useAuthDispatchUserContext();
-
+  const name = localStorage.getItem('userName');
   const menu = [
     {
       icon: <LogOut />,
@@ -19,11 +19,11 @@ export const Layout = ({ children }: LayoutProps) => {
     },
     {
       icon: <ShoppingCart />,
-      func: () => router.push(`/purchase`),
+      func: () => router.push('/purchase'),
     },
     {
       icon: <User />,
-      func: () => console.log('profile'),
+      func: () => router.push(`/profile/${name}`),
     },
   ];
   return (
