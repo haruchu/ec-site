@@ -1,13 +1,11 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { db } from '../../firebase/firebase';
 import { Button } from '../components/molecules/button';
 import { Input } from '../components/molecules/input';
-import { useAuthDispatchUserContext, useLoggedInContext } from '../contexts/AuthContextProvider';
-import { ErrorMessage, FormContent, FormLabel, FormWrapper, Wrapper } from '../styles/Form';
+import { useAuthDispatchUserContext } from '../contexts/AuthContextProvider';
+import { ErrorMessage, FormContent, FormLabel, Wrapper } from '../styles/Form';
 
 type FormValues = {
   name: string;
@@ -20,35 +18,15 @@ const Login: NextPage = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormValues>();
-  const router = useRouter();
 
-  const handleUpload = async (data: FormValues) => {
-    const colRef = db.collection('users');
-    const userSnap = await colRef.where('name', '==', data.name).get();
-    const userData = userSnap.docs.map((doc) => ({
-      ...doc.data(),
-    }));
-    console.log(userData);
-    if (userData.length > 0) {
-      signin(userData[0].id, data.name, data.password);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('userName', data.name);
-      }
-      router.push('/');
-    } else {
-      router.push('/404');
-    }
-  };
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => handleUpload(data);
+  const onSubmit: SubmitHandler<FormValues> = (data) => signin(data.name, data.password);
 
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
       <Head>
-        <title>ユーザー登録</title>
+        <title>ログイン</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <FormContent>

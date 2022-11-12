@@ -1,9 +1,8 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { v4 } from 'uuid';
 import { db } from '../../firebase/firebase';
 import { Button } from '../components/molecules/button';
 import { Input } from '../components/molecules/input';
@@ -28,16 +27,22 @@ const Signup: NextPage = () => {
   const router = useRouter();
 
   const handleUpload = async (data: FormValues) => {
-    const uuid = v4();
-    const docRef = db.collection('users').doc();
-    const insertData = {
-      id: uuid,
-      name: data.name,
-      password: data.password,
-    };
-    docRef.set(insertData);
-    signin(uuid, data.name, data.password);
-    router.push('/');
+    const userRef = db.collection('users');
+    const userSnap = await userRef.where('name', '==', data.name).get();
+    const userInfo = userSnap.docs.map((doc) => ({
+      docId: doc.id,
+    }));
+    if (userInfo.length > 0) {
+      alert('同じユーザー名が存在します');
+    } else {
+      const insertData = {
+        name: data.name,
+        password: data.password,
+        point: 1000,
+      };
+      userRef.doc().set(insertData);
+      signin(data.name, data.password);
+    }
   };
 
   const onSubmit: SubmitHandler<FormValues> = (data) => handleUpload(data);
