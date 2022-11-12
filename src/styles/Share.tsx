@@ -9,4 +9,8 @@ export const Wrapper = styled.div`
     padding: 10px;
   `}
   background-color: ${COLOR.main};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

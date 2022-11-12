@@ -1,9 +1,10 @@
+import { getDoc } from 'firebase/firestore';
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { db } from '../../../firebase/firebase';
 import ListLayout, { ItemType } from '../../layout/itemLayout';
-import { SalerName } from '../../styles/List';
+import { Point, SalerName, UserName, UserWrapper } from '../../styles/List';
 import { Wrapper } from '../../styles/Share';
 
 type ListType = {
@@ -16,6 +17,15 @@ const PERITEM = 4;
 const List: NextPage = ({ salerName, defaultItems }: ListType) => {
   const [items, setItems] = useState(defaultItems);
   const [hasMore, setHasMore] = useState(true);
+  const [point, setPoint] = useState(0);
+
+  const currentUserName = localStorage.getItem('userName');
+  const currentUserId = localStorage.getItem('userId');
+  const userRef = db.collection('users').doc(currentUserId);
+  (async () => {
+    const userData = await (await getDoc(userRef)).data();
+    setPoint(userData.point);
+  })();
 
   const loadMore = async () => {
     db.collection('items')
@@ -44,6 +54,14 @@ const List: NextPage = ({ salerName, defaultItems }: ListType) => {
         <title>{salerName}の商品リスト</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      {salerName === currentUserName ? (
+        <UserWrapper>
+          <UserName>{currentUserName}</UserName>
+          <Point>{point}</Point>
+        </UserWrapper>
+      ) : (
+        <></>
+      )}
       <SalerName>{salerName}の商品リスト</SalerName>
       {items.length !== 0 ? (
         <ListLayout items={items} loadMore={loadMore} hasMore={hasMore} />

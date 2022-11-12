@@ -28,7 +28,7 @@ const Login: NextPage = () => {
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
       <Head>
-        <title>ユーザー登録</title>
+        <title>ログイン</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <FormContent>

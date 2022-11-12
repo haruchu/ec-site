@@ -53,8 +53,11 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
   const [auth, setAuth] = useState<Auth>(getDefaultAuth());
 
   const signin = async (name: string, password: string) => {
-    const colRef = db.collection('users');
-    const userSnap = await colRef.where('name', '==', name).where('password', '==', password).get();
+    const userRef = db.collection('users');
+    const userSnap = await userRef
+      .where('name', '==', name)
+      .where('password', '==', password)
+      .get();
     const userInfo = userSnap.docs.map((doc) => ({
       docId: doc.id,
     }));
@@ -76,7 +79,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
 
       router.push('/');
     } else {
-      router.push('/404');
+      alert('ログイン情報が間違ってるか、ユーザーが存在しません。');
     }
   };
 

@@ -27,18 +27,25 @@ const Signup: NextPage = () => {
   const router = useRouter();
 
   const handleUpload = async (data: FormValues) => {
-    const docRef = db.collection('users').doc();
-    const insertData = {
-      name: data.name,
-      password: data.password,
-      point: 1000,
-    };
-    docRef.set(insertData);
-    signin(data.name, data.password);
-    router.push('/');
+    const userRef = db.collection('users');
+    const userSnap = await userRef.where('name', '==', data.name).get();
+    const userInfo = userSnap.docs.map((doc) => ({
+      docId: doc.id,
+    }));
+    if (userInfo.length > 0) {
+      alert('同じユーザー名が存在します');
+    } else {
+      const insertData = {
+        name: data.name,
+        password: data.password,
+        point: 1000,
+      };
+      userRef.doc().set(insertData);
+      signin(data.name, data.password);
+    }
   };
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => signin(data.name, data.password);
+  const onSubmit: SubmitHandler<FormValues> = (data) => handleUpload(data);
 
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>

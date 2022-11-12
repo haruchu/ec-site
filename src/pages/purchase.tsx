@@ -91,7 +91,7 @@ const Cart: NextPage = () => {
   return (
     <Wrapper>
       <Head>
-        <title>商品リスト</title>
+        <title>購入商品リスト</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       {items.length !== 0 ? (
