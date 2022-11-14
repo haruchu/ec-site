@@ -32,7 +32,7 @@ const Signup: NextPage = () => {
     const userInfo = userSnap.docs.map((doc) => ({
       docId: doc.id,
     }));
-    if (userInfo.length > 0) {
+    if (userInfo.length > 1) {
       alert('同じユーザー名が存在します');
     } else {
       const insertData = {
