@@ -1,15 +1,22 @@
 import styled from 'styled-components';
+import { phone } from '../../../valiables/BreakPoint';
 
 export const MenuLists = styled.ul`
   position: relative;
   width: 200px;
   height: 200px;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   bottom: 10px;
   right: 10px;
+
+  ${phone`
+    bottom: 0;
+    right: -4px;
+  `}
 `;
 
 export const Line = styled.div`
