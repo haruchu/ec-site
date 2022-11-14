@@ -20,7 +20,6 @@ import {
 } from '../components/molecules/item/style';
 import { PurchasedItem } from '../components/molecules/purchasedItem';
 import { StyledInfiniteScroll } from '../styles/List';
-import { Title } from '../styles/Share';
 
 export type ItemType = {
   id: string;
@@ -106,7 +105,7 @@ const PurchasedListLayout = ({ items, loadMore, hasMore, onCartOut }: ListLayout
           </ModalRight>
         </ModalWrapper>
       </StyledModal>
-      <Title>カートに入っているもの</Title>
+      <h2>カートに入っているもの</h2>
       <StyledInfiniteScroll loadMore={loadMore} hasMore={hasMore}>
         {items.map((item, index) => (
           <PurchasedItem

@@ -88,7 +88,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
       localStorage.removeItem('userId');
     }
     setAuth({ isLogined: false });
-    router.push('/login');
+    router.push('/top');
   };
 
   const dispatchValue: AuthDispatcher = { setAuth, signin, signout };
