@@ -61,7 +61,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
     const userInfo = userSnap.docs.map((doc) => ({
       docId: doc.id,
     }));
-    if (userInfo.length == 1) {
+    if (userInfo.length === 1) {
       const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
 
       const userRef = db.collection('users').doc(userInfo[0].docId);
