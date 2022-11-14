@@ -34,8 +34,7 @@ const Upload: NextPage = () => {
 
   useEffect(() => {
     getUserInfo().then((data) => {
-      console.log(data[0]);
-      setUserName(data[0].name);
+      setUserName(data.name);
     });
     console.log(userName);
     // マウント次のみ実行したいので許容する

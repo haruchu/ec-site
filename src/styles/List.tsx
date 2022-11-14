@@ -6,8 +6,7 @@ export const StyledInfiniteScroll = styled(InfiniteScroll)`
   /* min-height: 100vh; */
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 80px;
