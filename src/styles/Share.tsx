@@ -16,4 +16,12 @@ export const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const Title = styled.h2``;
+export const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 50px;
+
+  ${phone`
+    flex-direction: column;
+  `}
+`;
