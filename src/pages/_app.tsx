@@ -4,11 +4,11 @@ import { AuthContextProvider } from '../contexts/AuthContextProvider';
 import { RouteGuard } from '../contexts/RouteGuard';
 import { Layout } from '../layout/layout';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <AuthContextProvider>
       <RouteGuard>
-        <Layout>
+        <Layout currentRouter={router}>
           <Component {...pageProps} />
         </Layout>
       </RouteGuard>

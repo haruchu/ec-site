@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   `}
   background-color: ${COLOR.main};
   display: flex;
+  gap: 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
