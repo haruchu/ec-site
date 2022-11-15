@@ -62,10 +62,12 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
     if (userInfo.length > 1) {
       alert('同じユーザー名が存在します');
     } else {
+      const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
       const insertData = {
         name: name,
         password: password,
-        point: 1000,
+        point: 3000,
+        login_date: today
       };
       userRef.doc().set(insertData);
       if (typeof window !== 'undefined') {
