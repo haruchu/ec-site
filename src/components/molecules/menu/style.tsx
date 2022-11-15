@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MenuLists = styled.ul<{isActive: boolean}>`
+export const MenuLists = styled.ul<{ isActive: boolean }>`
   position: relative;
   width: 200px;
   height: 200px;
@@ -12,7 +12,7 @@ export const MenuLists = styled.ul<{isActive: boolean}>`
   bottom: 0;
   right: 0;
   transition: 0.5s;
-  transform: ${({ isActive }) => isActive ? `translate(-20px, 50px)` : `translate(40px, 50px)`};
+  transform: ${({ isActive }) => (isActive ? `translate(-20px, 50px)` : `translate(40px, 50px)`)};
 `;
 
 export const Line = styled.div`
