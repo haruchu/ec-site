@@ -63,7 +63,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
       alert('同じユーザー名が存在します');
     } else {
       const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
-      const docRef = await addDoc(collection(db, "users"), {
+      const docRef = await addDoc(collection(db, 'users'), {
         name: name,
         password: password,
         point: 3000,
@@ -81,9 +81,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
 
   const signin = async (name: string, password: string) => {
     const userRef = db.collection('users');
-    const userSnap = await userRef
-      .where('name', '==', name)
-      .get();
+    const userSnap = await userRef.where('name', '==', name).get();
     const userInfo = userSnap.docs.map((doc) => ({
       docId: doc.id,
     }));
