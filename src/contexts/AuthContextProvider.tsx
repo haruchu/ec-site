@@ -18,6 +18,7 @@ type Auth = {
 
 type AuthDispatcher = {
   setAuth: Dispatch<SetStateAction<Auth>>;
+  signup: (name: string, password: string) => void;
   signin: (name: string, password: string) => void;
   signout: () => void;
 };
@@ -51,6 +52,30 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
     };
   };
   const [auth, setAuth] = useState<Auth>(getDefaultAuth());
+
+  const signup = async (name: string, password: string) => {
+    const userRef = db.collection('users');
+    const userSnap = await userRef.where('name', '==', name).get();
+    const userInfo = userSnap.docs.map((doc) => ({
+      docId: doc.id,
+    }));
+    if (userInfo.length > 1) {
+      alert('同じユーザー名が存在します');
+    } else {
+      const insertData = {
+        name: name,
+        password: password,
+        point: 1000,
+      };
+      userRef.doc().set(insertData);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('userId', userInfo[0].docId);
+        localStorage.setItem('userName', name);
+      }
+      setAuth({ isLogined: true });
+      router.push('/');
+    }
+  };
 
   const signin = async (name: string, password: string) => {
     const userRef = db.collection('users');
@@ -91,7 +116,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
     router.push('/top');
   };
 
-  const dispatchValue: AuthDispatcher = { setAuth, signin, signout };
+  const dispatchValue: AuthDispatcher = { setAuth, signup, signin, signout };
 
   return (
     <LoggedInContext.Provider value={auth.isLogined}>

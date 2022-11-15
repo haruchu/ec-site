@@ -16,7 +16,7 @@ type FormValues = {
 };
 
 const Signup: NextPage = () => {
-  const { signin } = useAuthDispatchUserContext();
+  const { signup } = useAuthDispatchUserContext();
 
   const {
     register,
@@ -41,7 +41,7 @@ const Signup: NextPage = () => {
         point: 1000,
       };
       userRef.doc().set(insertData);
-      signin(data.name, data.password);
+      signup(data.name, data.password);
     }
   };
 
