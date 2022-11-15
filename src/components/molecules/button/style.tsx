@@ -9,6 +9,7 @@ export const StyledButton = styled.button`
   padding: 20px 40px;
   outline: none;
   border: none;
+  color: black;
   border-radius: 50px;
   background: linear-gradient(145deg, #f8e6ff, #d1c2dc);
   box-shadow: 10px 10px 20px #c8b9d2, -10px -10px 20px #fff5ff;
