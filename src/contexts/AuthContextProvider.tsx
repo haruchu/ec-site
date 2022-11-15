@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import ja from 'date-fns/locale/ja';
-import { getDoc } from 'firebase/firestore';
+import { addDoc, collection, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import React, {
   createContext,
@@ -63,19 +63,19 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
       alert('同じユーザー名が存在します');
     } else {
       const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
-      const insertData = {
+      const docRef = await addDoc(collection(db, "users"), {
         name: name,
         password: password,
         point: 3000,
         login_date: today,
-      };
-      userRef.doc().set(insertData);
+      });
+      console.log(docRef);
       if (typeof window !== 'undefined') {
-        localStorage.setItem('userId', userInfo[0].docId);
+        localStorage.setItem('userId', docRef.id);
         localStorage.setItem('userName', name);
       }
       setAuth({ isLogined: true });
-      router.push('/');
+      router.push('/home');
     }
   };
 
@@ -83,31 +83,31 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
     const userRef = db.collection('users');
     const userSnap = await userRef
       .where('name', '==', name)
-      .where('password', '==', password)
       .get();
     const userInfo = userSnap.docs.map((doc) => ({
       docId: doc.id,
     }));
-    if (userInfo.length === 1) {
-      const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
+    console.log(userInfo);
+    // if (userInfo.length > 0) {
+    //   const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
 
-      const userRef = db.collection('users').doc(userInfo[0].docId);
-      const userData = await (await getDoc(userRef)).data();
-      // 最終ログイン日時を跨いだら更新・ポイントボーナス
-      if (userData.login_date && new Date(userData.login_date) < new Date(today)) {
-        await userRef.update({ login_date: today, point: userData.point + 100 });
-      }
+    //   const userRef = db.collection('users').doc(userInfo[0].docId);
+    //   const userData = await (await getDoc(userRef)).data();
+    //   // 最終ログイン日時を跨いだら更新・ポイントボーナス
+    //   if (userData.login_date && new Date(userData.login_date) < new Date(today)) {
+    //     await userRef.update({ login_date: today, point: userData.point + 100 });
+    //   }
 
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('userId', userInfo[0].docId);
-        localStorage.setItem('userName', userData.name);
-      }
-      setAuth({ isLogined: true });
+    //   if (typeof window !== 'undefined') {
+    //     localStorage.setItem('userId', userInfo[0].docId);
+    //     localStorage.setItem('userName', userData.name);
+    //   }
+    //   setAuth({ isLogined: true });
 
-      router.push('/');
-    } else {
-      alert('ログイン情報が間違ってるか、ユーザーが存在しません。');
-    }
+    //   router.push('/home');
+    // } else {
+    //   alert('ログイン情報が間違ってるか、ユーザーが存在しません。');
+    // }
   };
 
   const signout = async () => {
@@ -115,7 +115,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
       localStorage.removeItem('userId');
     }
     setAuth({ isLogined: false });
-    router.push('/top');
+    router.push('/');
   };
 
   const dispatchValue: AuthDispatcher = { setAuth, signup, signin, signout };
