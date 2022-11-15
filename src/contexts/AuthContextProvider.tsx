@@ -87,27 +87,25 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
     const userInfo = userSnap.docs.map((doc) => ({
       docId: doc.id,
     }));
-    console.log(userInfo);
-    // if (userInfo.length > 0) {
-    //   const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
+    if (userInfo.length > 0) {
+      const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
+      const userRef = db.collection('users').doc(userInfo[0].docId);
+      const userData = await (await getDoc(userRef)).data();
+      // 最終ログイン日時を跨いだら更新・ポイントボーナス
+      if (userData.login_date && new Date(userData.login_date) < new Date(today)) {
+        await userRef.update({ login_date: today, point: userData.point + 100 });
+      }
 
-    //   const userRef = db.collection('users').doc(userInfo[0].docId);
-    //   const userData = await (await getDoc(userRef)).data();
-    //   // 最終ログイン日時を跨いだら更新・ポイントボーナス
-    //   if (userData.login_date && new Date(userData.login_date) < new Date(today)) {
-    //     await userRef.update({ login_date: today, point: userData.point + 100 });
-    //   }
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('userId', userInfo[0].docId);
+        localStorage.setItem('userName', userData.name);
+      }
+      setAuth({ isLogined: true });
 
-    //   if (typeof window !== 'undefined') {
-    //     localStorage.setItem('userId', userInfo[0].docId);
-    //     localStorage.setItem('userName', userData.name);
-    //   }
-    //   setAuth({ isLogined: true });
-
-    //   router.push('/home');
-    // } else {
-    //   alert('ログイン情報が間違ってるか、ユーザーが存在しません。');
-    // }
+      router.push('/home');
+    } else {
+      alert('ログイン情報が間違ってるか、ユーザーが存在しません。');
+    }
   };
 
   const signout = async () => {
