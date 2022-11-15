@@ -1,6 +1,6 @@
 import { Router, useRouter } from 'next/router';
 import { ReactElement, useState } from 'react';
-import { Home, LogOut, ShoppingCart, User } from 'react-feather';
+import { Home, LogOut, ShoppingCart, Upload, User } from 'react-feather';
 import { Menu } from '../components/molecules/menu';
 import { useAuthDispatchUserContext } from '../contexts/AuthContextProvider';
 
@@ -26,6 +26,10 @@ export const Layout = ({ children, currentRouter }: LayoutProps) => {
     {
       icon: <User />,
       func: () => router.push(`/profile/${name}`),
+    },
+    {
+      icon: <Upload />,
+      func: () => router.push(`/upload`),
     },
     {
       icon: <LogOut />,

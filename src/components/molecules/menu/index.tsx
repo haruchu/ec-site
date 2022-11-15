@@ -13,7 +13,7 @@ export const Menu = ({ menu }: Menuprops) => {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <MenuLists>
+    <MenuLists isActive={isActive}>
       <Toggle isActive={isActive} onClick={() => setIsActive(!isActive)}>
         <Line></Line>
         <Line></Line>
