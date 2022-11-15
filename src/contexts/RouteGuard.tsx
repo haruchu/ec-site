@@ -31,12 +31,12 @@ function RouteGuard({ children }) {
 
   function authCheck(url) {
     // redirect to login page if accessing a private page and not logged in
-    const publicPaths = ['/top', '/signup', '/login'];
+    const publicPaths = ['/', '/signup', '/login'];
     const path = url.split('?')[0];
 
     if (!isLoggedIn && !publicPaths.includes(path)) {
       setAuthorized(false);
-      router.replace('/top');
+      router.replace('/');
     } else {
       setAuthorized(true);
     }

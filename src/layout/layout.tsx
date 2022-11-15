@@ -13,11 +13,11 @@ export const Layout = ({ children, currentRouter }: LayoutProps) => {
   const router = useRouter();
   const { signout } = useAuthDispatchUserContext();
   const name = localStorage.getItem('userName');
-  const publicPaths = ['/top', '/signup', '/login'];
+  const publicPaths = ['/', '/signup', '/login'];
   const menu = [
     {
       icon: <Home />,
-      func: () => router.push(`/`),
+      func: () => router.push(`/home`),
     },
     {
       icon: <ShoppingCart />,

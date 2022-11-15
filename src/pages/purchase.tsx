@@ -117,7 +117,7 @@ const Cart: NextPage = () => {
             text='購入する'
             onClick={() => {
               onPurchase(totalPoint);
-              router.push('/');
+              router.push('/home');
             }}
           />
         </>
