@@ -13,6 +13,7 @@ export const Layout = ({ children, currentRouter }: LayoutProps) => {
   const router = useRouter();
   const { signout } = useAuthDispatchUserContext();
   const name = localStorage.getItem('userName');
+  const publicPaths = ['/top', '/signup', '/login'];
   const menu = [
     {
       icon: <Home />,
@@ -34,9 +35,7 @@ export const Layout = ({ children, currentRouter }: LayoutProps) => {
   return (
     <>
       {children}
-      {currentRouter.pathname !== '/login' && currentRouter.pathname !== '/signup' && (
-        <Menu menu={menu} />
-      )}
+      {!publicPaths.includes(currentRouter.pathname) && <Menu menu={menu} />}
     </>
   );
 };
