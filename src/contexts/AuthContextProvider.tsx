@@ -67,7 +67,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
         name: name,
         password: password,
         point: 3000,
-        login_date: today
+        login_date: today,
       };
       userRef.doc().set(insertData);
       if (typeof window !== 'undefined') {
