@@ -115,10 +115,7 @@ const Cart: NextPage = () => {
           />
           <Button
             text='購入する'
-            onClick={() => {
-              onPurchase(totalPoint);
-              router.push('/home');
-            }}
+            onClick={() => onPurchase(totalPoint, () => router.push('/home'))}
           />
         </>
       ) : (
