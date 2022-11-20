@@ -69,12 +69,12 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
         point: 3000,
         login_date: today,
       });
-      console.log(docRef);
       if (typeof window !== 'undefined') {
         localStorage.setItem('userId', docRef.id);
         localStorage.setItem('userName', name);
       }
       setAuth({ isLogined: true });
+      console.log('loginしました');
       router.push('/home');
     }
   };
@@ -99,6 +99,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
         localStorage.setItem('userName', userData.name);
       }
       setAuth({ isLogined: true });
+      console.log('loginしました');
 
       router.push('/home');
     } else {
@@ -109,6 +110,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
   const signout = async () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('userId');
+      localStorage.removeItem('userName');
     }
     setAuth({ isLogined: false });
     router.push('/');
