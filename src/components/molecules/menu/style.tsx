@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { phone } from '../../../valiables/BreakPoint';
 
-export const MenuLists = styled.ul`
+export const MenuLists = styled.ul<{ isActive: boolean }>`
   position: relative;
   width: 200px;
   height: 200px;
@@ -10,13 +9,10 @@ export const MenuLists = styled.ul`
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 10px;
-  right: 10px;
-
-  ${phone`
-    bottom: 0;
-    right: -4px;
-  `}
+  bottom: 0;
+  right: 0;
+  transition: 0.5s;
+  transform: ${({ isActive }) => (isActive ? `translate(-20px, 50px)` : `translate(40px, 50px)`)};
 `;
 
 export const Line = styled.div`
@@ -66,7 +62,7 @@ export const MenuList = styled.li<{ index: number; isActive: boolean }>`
   transition: 0.5s;
   transition-delay: ${(index) => `calc(0.1s * var(${index}))`};
   transform: ${({ isActive, index }) =>
-    isActive ? `rotate(calc(360deg / 8 * ${index}))` : `rotate(0) translateX(80px)`};
+    isActive ? `rotate(calc(360deg / 8 * (${index}-1)))` : `rotate(0) translateX(80px)`};
 `;
 
 export const Icon = styled.span<{ index: number }>`

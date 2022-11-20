@@ -16,7 +16,7 @@ type FormValues = {
 };
 
 const Signup: NextPage = () => {
-  const { signin } = useAuthDispatchUserContext();
+  const { signup } = useAuthDispatchUserContext();
 
   const {
     register,
@@ -26,26 +26,7 @@ const Signup: NextPage = () => {
   } = useForm<FormValues>();
   const router = useRouter();
 
-  const handleUpload = async (data: FormValues) => {
-    const userRef = db.collection('users');
-    const userSnap = await userRef.where('name', '==', data.name).get();
-    const userInfo = userSnap.docs.map((doc) => ({
-      docId: doc.id,
-    }));
-    if (userInfo.length > 1) {
-      alert('同じユーザー名が存在します');
-    } else {
-      const insertData = {
-        name: data.name,
-        password: data.password,
-        point: 1000,
-      };
-      userRef.doc().set(insertData);
-      signin(data.name, data.password);
-    }
-  };
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => handleUpload(data);
+  const onSubmit: SubmitHandler<FormValues> = (data) => signup(data.name, data.password);
 
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>

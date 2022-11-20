@@ -21,13 +21,18 @@ export const onCartOutFunc = (itemId: string) => {
   }
 };
 
-export const onPurchase = async (price: number) => {
+export const onPurchase = async (price: number, successFunc: () => void) => {
   if (window.localStorage) {
     const userId = localStorage.getItem('userId');
     const userRef = db.collection('users').doc(userId);
     const userData = await (await getDoc(userRef)).data();
-    await userRef.update({ point: userData.point - price });
-    localStorage.removeItem('purchasedItems');
-    alert('購入しました');
+    if (userData.point - price < 0) {
+      alert('ポイントが足りません');
+    } else {
+      await userRef.update({ point: userData.point - price });
+      localStorage.removeItem('purchasedItems');
+      alert('購入しました');
+      successFunc();
+    }
   }
 };

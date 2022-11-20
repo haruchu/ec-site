@@ -1,11 +1,10 @@
 import { getDoc } from 'firebase/firestore';
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { db } from '../../../firebase/firebase';
 import ListLayout, { ItemType } from '../../layout/itemLayout';
-import { Point, SalerName, UserName, UserWrapper } from '../../styles/List';
-import { Wrapper } from '../../styles/Share';
+import { Point, ProfileWrapper, SalerName, UserName, UserWrapper } from '../../styles/Profile';
 
 type ListType = {
   salerName: string;
@@ -49,7 +48,7 @@ const List: NextPage = ({ salerName, defaultItems }: ListType) => {
   };
 
   return (
-    <Wrapper>
+    <ProfileWrapper>
       <Head>
         <title>{salerName}の商品リスト</title>
         <link rel='icon' href='/favicon.ico' />
@@ -68,7 +67,7 @@ const List: NextPage = ({ salerName, defaultItems }: ListType) => {
       ) : (
         <>ありません</>
       )}
-    </Wrapper>
+    </ProfileWrapper>
   );
 };
 

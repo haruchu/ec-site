@@ -85,7 +85,7 @@ const Upload: NextPage = () => {
       uploadDate: CurrentDate,
     };
     docRef.set(insertData);
-    router.push('/');
+    router.push('/home');
   };
 
   const handlePreview = (files: any) => {

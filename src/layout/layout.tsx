@@ -1,6 +1,6 @@
 import { Router, useRouter } from 'next/router';
 import { ReactElement, useState } from 'react';
-import { Home, LogOut, ShoppingCart, User } from 'react-feather';
+import { Home, LogOut, ShoppingCart, Upload, User } from 'react-feather';
 import { Menu } from '../components/molecules/menu';
 import { useAuthDispatchUserContext } from '../contexts/AuthContextProvider';
 
@@ -13,10 +13,11 @@ export const Layout = ({ children, currentRouter }: LayoutProps) => {
   const router = useRouter();
   const { signout } = useAuthDispatchUserContext();
   const name = localStorage.getItem('userName');
+  const publicPaths = ['/', '/signup', '/login'];
   const menu = [
     {
       icon: <Home />,
-      func: () => router.push(`/`),
+      func: () => router.push(`/home`),
     },
     {
       icon: <ShoppingCart />,
@@ -27,6 +28,10 @@ export const Layout = ({ children, currentRouter }: LayoutProps) => {
       func: () => router.push(`/profile/${name}`),
     },
     {
+      icon: <Upload />,
+      func: () => router.push(`/upload`),
+    },
+    {
       icon: <LogOut />,
       func: () => signout(),
     },
@@ -34,9 +39,7 @@ export const Layout = ({ children, currentRouter }: LayoutProps) => {
   return (
     <>
       {children}
-      {currentRouter.pathname !== '/login' && currentRouter.pathname !== '/signup' && (
-        <Menu menu={menu} />
-      )}
+      {!publicPaths.includes(currentRouter.pathname) && <Menu menu={menu} />}
     </>
   );
 };
