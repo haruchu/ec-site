@@ -61,21 +61,16 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
     }));
     if (userInfo.length > 1) {
       alert('同じユーザー名が存在します');
+      return;
     } else {
       const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
-      const docRef = await addDoc(collection(db, 'users'), {
+      await addDoc(collection(db, 'users'), {
         name: name,
         password: password,
         point: 3000,
         login_date: today,
       });
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('userId', docRef.id);
-        localStorage.setItem('userName', name);
-      }
-      setAuth({ isLogined: true });
-      console.log('loginしました');
-      router.push('/home');
+      signin(name, password);
     }
   };
 
@@ -86,9 +81,13 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
       docId: doc.id,
     }));
     if (userInfo.length > 0) {
-      const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
       const userRef = db.collection('users').doc(userInfo[0].docId);
       const userData = await (await getDoc(userRef)).data();
+      if (userData.password !== password) {
+        alert('パスワードが間違っています');
+        return;
+      }
+      const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
       // 最終ログイン日時を跨いだら更新・ポイントボーナス
       if (userData.login_date && new Date(userData.login_date) < new Date(today)) {
         await userRef.update({ login_date: today, point: userData.point + 100 });
@@ -99,8 +98,6 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
         localStorage.setItem('userName', userData.name);
       }
       setAuth({ isLogined: true });
-      console.log('loginしました');
-
       router.push('/home');
     } else {
       alert('ログイン情報が間違ってるか、ユーザーが存在しません。');
