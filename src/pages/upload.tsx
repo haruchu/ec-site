@@ -69,7 +69,7 @@ const Upload: NextPage = () => {
       setHasNotFile(true);
       return;
     }
-
+    const userIdToken = localStorage.getItem('userId');
     const uuid = v4();
     const date = new Date();
     const CurrentDate = getStringFromDate(date);
@@ -81,6 +81,7 @@ const Upload: NextPage = () => {
       price: data.price,
       imageId: CurrentDate,
       saler: userName,
+      salerId: userIdToken,
       uploadDate: CurrentDate,
     };
     docRef.set(insertData);

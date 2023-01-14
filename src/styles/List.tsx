@@ -18,3 +18,28 @@ export const StyledInfiniteScroll = styled(InfiniteScroll)`
   `}
   margin: 40px 20px;
 `;
+
+export const TotalPrice = styled.p`
+  display: flex;
+  justify-content: flex-end;
+  width: 70%;
+`;
+
+export const TotalPriceText = styled.span`
+  font-size: 28px;
+  ${phone`
+    font-size: 20px;
+  `}
+  &:before {
+    content: '合計';
+    margin-right: 12px;
+  }
+  &:after {
+    margin-left: 4px;
+    content: 'pt';
+    font-size: 24px;
+    ${phone`
+    font-size: 16px;
+  `}
+  }
+`;

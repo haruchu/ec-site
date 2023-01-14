@@ -29,6 +29,7 @@ export type ItemType = {
   price: number;
   imageId: string;
   saler: string;
+  salerId: string;
   uploadDate: string;
 };
 
