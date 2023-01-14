@@ -7,6 +7,7 @@ import { Button } from '../components/molecules/button';
 import { onCartOutFunc, onPurchase } from '../hooks/purchase';
 import { ItemType } from '../layout/itemLayout';
 import PurchasedListLayout from '../layout/purchasedLayout';
+import { TotalPrice, TotalPriceText } from '../styles/List';
 import { Wrapper } from '../styles/Share';
 
 const PERITEM = 4;
@@ -75,16 +76,21 @@ const Cart: NextPage = () => {
   };
 
   useEffect(() => {
+    const purchasedItemsInfoJson = localStorage.getItem('purchasedItems');
+    const purchasedItemsInfo =
+      purchasedItemsInfoJson == null ? [] : JSON.parse(purchasedItemsInfoJson);
     get().then((data) => {
       if (data.length > 0) {
-        const newItems: ItemType[] = [
+        const newItems: (ItemType & { count: string })[] = [
           {
             id: data[0].id,
             name: data[0].name,
             price: data[0].price,
             imageId: data[0].imageId,
             saler: data[0].saler,
+            salerId: data[0].salerId,
             uploadDate: data[0].uploadDate,
+            count: purchasedItemsInfo.find((item) => item.id === data[0].id).count,
           },
         ];
         setItems([...items, ...newItems]);
@@ -113,6 +119,9 @@ const Cart: NextPage = () => {
             hasMore={hasMore}
             onCartOut={(id) => onCartOut(id)}
           />
+          <TotalPrice>
+            <TotalPriceText>{totalPoint}</TotalPriceText>
+          </TotalPrice>
           <Button
             text='購入する'
             onClick={() => onPurchase(totalPoint, () => router.push('/home'))}

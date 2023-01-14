@@ -63,6 +63,26 @@ export const Price = styled.span`
   ${phone`
     font-size: 20px;
   `}
+  &:after {
+    margin-left: 4px;
+    content: 'pt';
+    font-size: 24px;
+    ${phone`
+    font-size: 16px;
+  `}
+  }
+`;
+
+export const Count = styled.span`
+  font-size: 20px;
+  ${phone`
+    font-size: 12px;
+  `}
+
+  &:before {
+    content: '×';
+    margin-right: 4px;
+  }
 `;
 
 export const DeleteButton = styled.button`

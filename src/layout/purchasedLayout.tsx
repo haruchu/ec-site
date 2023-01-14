@@ -20,18 +20,10 @@ import {
 } from '../components/molecules/item/style';
 import { PurchasedItem } from '../components/molecules/purchasedItem';
 import { StyledInfiniteScroll } from '../styles/List';
-
-export type ItemType = {
-  id: string;
-  name: string;
-  price: number;
-  imageId: string;
-  saler: string;
-  uploadDate: string;
-};
+import { ItemType } from './itemLayout';
 
 type ListLayoutProps = {
-  items: ItemType[];
+  items: (ItemType & { count: string })[];
   loadMore: () => Promise<void>;
   hasMore: boolean;
   onCartOut: (id: string) => void;
@@ -113,6 +105,7 @@ const PurchasedListLayout = ({ items, loadMore, hasMore, onCartOut }: ListLayout
             id={item.id}
             name={item.name}
             price={item.price}
+            count={item.count}
             imageId={item.imageId}
             salerName={item.saler}
             onModalOpen={() =>
