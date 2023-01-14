@@ -7,13 +7,12 @@ export const Wrapper = styled.div`
   width: 80%;
   padding: 20px;
   background: #e8d7f4;
-  box-shadow: 9px 9px 18px #cabbd4, -9px -9px 18px #fff3ff;
+  box-shadow: 6px 6px 12px #d1c2dc, -6px -6px 12px #ffedff;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 20px;
   border-radius: 16px;
-  cursor: pointer;
   ${phone`
     width: 100%;
     padding: 10px;

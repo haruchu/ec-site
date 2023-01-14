@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   width: 300px;
   height: 350px;
   background: #e8d7f4;
-  box-shadow: 9px 9px 18px #cabbd4, -9px -9px 18px #fff3ff;
+  box-shadow: 6px 6px 12px #d1c2dc, -6px -6px 12px #ffedff;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -53,9 +53,6 @@ export const StyledImageButton = styled.button`
   border-radius: 16px;
   padding: 0;
   overflow: hidden;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
-    rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
-    rgba(0, 0, 0, 0.09) 0px -3px 5px;
 `;
 
 export const StyledImage = styled.img`
@@ -84,12 +81,17 @@ export const StyledPrice = styled.p`
   font-size: 14px;
   margin: 4px;
   color: gray;
+  &::after {
+    content: 'pt';
+    margin-left: 2px;
+  }
 `;
 
 export const StyledModal = styled(ReactModal)`
   display: flex;
 `;
 
+// モーダルのスタイル
 export const modalStyle: ReactModal.Styles = {
   overlay: {
     position: 'fixed',
@@ -168,13 +170,18 @@ export const SalerWrapper = styled.div`
 
 export const ModalSeller = styled.span`
   margin: 0;
-  padding: 8px;
+  padding: 12px;
   color: #31c4fe;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 0.2s;
+  background: #e8d7f4;
+  box-shadow: 5px 5px 10px #d3c4de, -5px -5px 10px #fdeaff;
+  border-radius: 4px;
+  margin-bottom: 12px;
 
   &:hover {
-    opacity: 0.3;
+    background: #e8d7f4;
+    box-shadow: inset 5px 5px 10px #d8c8e3, inset -5px -5px 10px #f8e6ff;
   }
 
   &::before {
