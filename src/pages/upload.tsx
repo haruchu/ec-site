@@ -36,7 +36,6 @@ const Upload: NextPage = () => {
     getUserInfo().then((data) => {
       setUserName(data.name);
     });
-    console.log(userName);
     // マウント次のみ実行したいので許容する
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
