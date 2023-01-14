@@ -86,9 +86,13 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) =>
       docId: doc.id,
     }));
     if (userInfo.length > 0) {
-      const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
       const userRef = db.collection('users').doc(userInfo[0].docId);
       const userData = await (await getDoc(userRef)).data();
+      if (userData.password !== password) {
+        alert('パスワードが間違っています');
+        return;
+      }
+      const today = format(new Date(), 'yyyy-MM-dd', { locale: ja });
       // 最終ログイン日時を跨いだら更新・ポイントボーナス
       if (userData.login_date && new Date(userData.login_date) < new Date(today)) {
         await userRef.update({ login_date: today, point: userData.point + 100 });
