@@ -43,6 +43,7 @@ export const onPurchase = async (price: number, successFunc: () => void) => {
         const salerUserRef = db.collection('users').doc(itemData.salerId);
         const salerUserData = await (await getDoc(salerUserRef)).data();
         await salerUserRef.update({ point: salerUserData.point + Number(item.price) * item.count });
+        itemRef.delete();
       });
       await userRef.update({ point: userData.point - price });
       localStorage.removeItem('purchasedItems');
