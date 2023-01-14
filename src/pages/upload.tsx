@@ -22,7 +22,7 @@ import { getStringFromDate } from './api/item';
 
 type FormValues = {
   name: string;
-  price: number;
+  point: number;
 };
 
 const Upload: NextPage = () => {
@@ -36,7 +36,6 @@ const Upload: NextPage = () => {
     getUserInfo().then((data) => {
       setUserName(data.name);
     });
-    console.log(userName);
     // マウント次のみ実行したいので許容する
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -79,7 +78,7 @@ const Upload: NextPage = () => {
     const insertData = {
       id: uuid,
       name: data.name,
-      price: data.price,
+      point: data.point,
       imageId: CurrentDate,
       saler: userName,
       salerId: userIdToken,
@@ -127,11 +126,11 @@ const Upload: NextPage = () => {
         </FormContent>
         <FormContent>
           <FormLabel>価格</FormLabel>
-          <Input type='text' {...register('price', { required: true, pattern: /\d+/i })} />
-          {errors.price && errors.price.type === 'required' && (
+          <Input type='text' {...register('point', { required: true, pattern: /\d+/i })} />
+          {errors.point && errors.point.type === 'required' && (
             <ErrorMessage>価格が入力されていません</ErrorMessage>
           )}
-          {errors.price && errors.price.type === 'pattern' && (
+          {errors.point && errors.point.type === 'pattern' && (
             <ErrorMessage>数値のみ入力可能です</ErrorMessage>
           )}
         </FormContent>

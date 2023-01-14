@@ -16,7 +16,7 @@ import {
   ModalItemName,
   SalerWrapper,
   ModalSeller,
-  ModalItemPrice,
+  ModalItemPoint,
   BuyButtonWrapper,
   StyledButton,
 } from '../components/molecules/item/style';
@@ -26,7 +26,7 @@ import { StyledInfiniteScroll } from '../styles/List';
 export type ItemType = {
   id: string;
   name: string;
-  price: number;
+  point: number;
   imageId: string;
   saler: string;
   salerId: string;
@@ -44,7 +44,7 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
   const [count, setCount] = useState(1);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
-  const [price, setPrice] = useState(0);
+  const [point, setPoint] = useState(0);
   const [salerName, setSalerName] = useState('');
   const [imageId, setImageId] = useState('');
   const [url, setURL] = useState('');
@@ -75,13 +75,13 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
   const onModalOpen = (
     id: string,
     name: string,
-    price: number,
+    point: number,
     salerName: string,
     imageId: string,
   ) => {
     setId(id);
     setName(name);
-    setPrice(price);
+    setPoint(point);
     setCount(1);
     setSalerName(salerName);
     setImageId(imageId);
@@ -93,8 +93,8 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
     setIsOpen(false);
   };
 
-  const onLayoutCartIn = (id: string, price: number, count: number) => {
-    onCartInFunc(id, price, count);
+  const onLayoutCartIn = (id: string, point: number, count: number) => {
+    onCartInFunc(id, point, count);
     refreshCartItems();
     setIsOpen(false);
   };
@@ -122,7 +122,7 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
                 {salerName}
               </ModalSeller>
             </SalerWrapper>
-            {isCarted ? <></> : <ModalItemPrice>{price * count}</ModalItemPrice>}
+            {isCarted ? <></> : <ModalItemPoint>{point * count}</ModalItemPoint>}
             <BuyButtonWrapper>
               {isCarted ? (
                 <StyledButton text='カートから外す' onClick={() => onLayoutCartOut(id)} />
@@ -131,7 +131,7 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
                   <Count count={count} onChange={setCount} />
                   <StyledButton
                     text='カートに入れる'
-                    onClick={() => onLayoutCartIn(id, price, count)}
+                    onClick={() => onLayoutCartIn(id, point, count)}
                   />
                 </>
               )}
@@ -144,10 +144,10 @@ const ListLayout = ({ items, loadMore, hasMore }: ListLayoutProps) => {
           <Item
             key={index}
             name={item.name}
-            price={item.price}
+            point={item.point}
             imageId={item.imageId}
             onModalOpen={() =>
-              onModalOpen(item.id, item.name, item.price, item.saler, item.imageId)
+              onModalOpen(item.id, item.name, item.point, item.saler, item.imageId)
             }
           />
         ))}

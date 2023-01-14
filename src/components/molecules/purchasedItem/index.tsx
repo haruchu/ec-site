@@ -6,7 +6,7 @@ import {
   Wrapper,
   StyledImage,
   Text,
-  Price,
+  Point,
   ItemInfo,
   DeleteButton,
   RightParts,
@@ -16,7 +16,7 @@ import {
 type ItemProps = {
   id: string;
   name: string;
-  price: number;
+  point: number;
   count: string;
   imageId: string;
   salerName: string;
@@ -24,7 +24,7 @@ type ItemProps = {
   onCarOut: () => void;
 };
 
-export const PurchasedItem = ({ name, price, count, imageId, onCarOut }: ItemProps) => {
+export const PurchasedItem = ({ name, point, count, imageId, onCarOut }: ItemProps) => {
   const [url, setURL] = useState('');
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const PurchasedItem = ({ name, price, count, imageId, onCarOut }: ItemPro
         <ItemInfo>
           <Text>{name}</Text>
           <RightParts>
-            <Price>{price}</Price>
+            <Point>{point}</Point>
             <Count>{count}</Count>
             <DeleteButton onClick={() => onCarOut()}>
               <X />
