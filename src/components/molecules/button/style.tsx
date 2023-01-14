@@ -12,8 +12,10 @@ export const StyledButton = styled.button`
   color: black;
   border-radius: 50px;
   background: linear-gradient(145deg, #f8e6ff, #d1c2dc);
-  box-shadow: 10px 10px 20px #c8b9d2, -10px -10px 20px #fff5ff;
+  box-shadow: 11px 11px 22px #cebfd9, -11px -11px 22px #ffefff;
+  transition: 1s;
   &:hover {
-    box-shadow: 5px 5px 10px #c8b9d2, -5px -5px 10px #fff5ff;
+    background: #e8d7f4;
+    box-shadow: inset 11px 11px 22px #cebfd9, inset -11px -11px 22px #ffefff;
   }
 `;

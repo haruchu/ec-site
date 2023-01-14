@@ -29,9 +29,10 @@ export const CountButton = styled.button`
   border-radius: 20px;
   border: none;
   background: linear-gradient(145deg, #f8e6ff, #d1c2dc);
-  box-shadow: 10px 10px 20px #c8b9d2, -10px -10px 20px #fff5ff;
+  box-shadow: 2px 2px 4px #d1c2dc, -2px -2px 4px #ffedff;
   &:hover {
-    box-shadow: 5px 5px 10px #c8b9d2, -5px -5px 10px #fff5ff;
+    background: #e8d7f4;
+    box-shadow: inset 2px 2px 4px #d1c2dc, inset -2px -2px 4px #ffedff;
   }
 
   & span {

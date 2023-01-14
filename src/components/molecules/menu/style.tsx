@@ -39,7 +39,7 @@ export const Toggle = styled.button<{ isActive: boolean }>`
   z-index: 99;
   transform: translateX(-20px);
   background: linear-gradient(145deg, #f8e6ff, #d1c2dc);
-  box-shadow: 5px 5px 34px #b5a8be, -5px -5px 34px #ffffff;
+  box-shadow: 5px 5px 10px #ccbdd7, -5px -5px 10px #fff1ff;
   ${Line} {
     :first-child {
       transform: ${({ isActive }) => (isActive ? `translateY(7px) rotate(-45deg)` : 'rotate(0)')};
@@ -55,14 +55,18 @@ export const Toggle = styled.button<{ isActive: boolean }>`
 `;
 
 export const MenuList = styled.li<{ index: number; isActive: boolean }>`
+  cursor: pointer;
   position: absolute;
   left: 0;
   list-style: none;
   transform-origin: 100px;
-  transition: 0.5s;
+  transition: 0.2s;
   transition-delay: ${(index) => `calc(0.1s * var(${index}))`};
   transform: ${({ isActive, index }) =>
     isActive ? `rotate(calc(360deg / 8 * (${index}-1)))` : `rotate(0) translateX(80px)`};
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 export const Icon = styled.span<{ index: number }>`
@@ -73,10 +77,8 @@ export const Icon = styled.span<{ index: number }>`
   height: 40px;
   border-radius: 50%;
   background: linear-gradient(145deg, #f8e6ff, #d1c2dc);
-  box-shadow: 8px 8px 16px #b0a3b9, -8px -8px 16px #ffffff;
+  box-shadow: 4px 4px 8px #d1c2dc, -4px -4px 8px #ffedff;
   transform: ${({ index }) => `rotate(calc(360deg / -8 * ${index}))`};
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
   color: #000;
-  transition: 0.5s;
-  cursor: pointer;
 `;
