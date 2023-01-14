@@ -14,7 +14,7 @@ import {
   ModalItemName,
   SalerWrapper,
   ModalSeller,
-  ModalItemPrice,
+  ModalItemPoint,
   BuyButtonWrapper,
   StyledButton,
 } from '../components/molecules/item/style';
@@ -34,7 +34,7 @@ const PurchasedListLayout = ({ items, loadMore, hasMore, onCartOut }: ListLayout
   const [count, setCount] = useState(1);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
-  const [price, setPrice] = useState(0);
+  const [point, setPoint] = useState(0);
   const [salerName, setSalerName] = useState('');
   const [imageId, setImageId] = useState('');
   const [url, setURL] = useState('');
@@ -51,13 +51,13 @@ const PurchasedListLayout = ({ items, loadMore, hasMore, onCartOut }: ListLayout
   const onModalOpen = (
     id: string,
     name: string,
-    price: number,
+    point: number,
     salerName: string,
     imageId: string,
   ) => {
     setId(id);
     setName(name);
-    setPrice(price);
+    setPoint(point);
     setSalerName(salerName);
     setImageId(imageId);
     setIsOpen(true);
@@ -90,7 +90,7 @@ const PurchasedListLayout = ({ items, loadMore, hasMore, onCartOut }: ListLayout
                 {salerName}
               </ModalSeller>
             </SalerWrapper>
-            <ModalItemPrice>{price * count}</ModalItemPrice>
+            <ModalItemPoint>{point * count}</ModalItemPoint>
             <BuyButtonWrapper>
               <StyledButton text='カートから外す' onClick={() => onLayoutCartOut(id)} />
             </BuyButtonWrapper>
@@ -104,12 +104,12 @@ const PurchasedListLayout = ({ items, loadMore, hasMore, onCartOut }: ListLayout
             key={index}
             id={item.id}
             name={item.name}
-            price={item.price}
+            point={item.point}
             count={item.count}
             imageId={item.imageId}
             salerName={item.saler}
             onModalOpen={() =>
-              onModalOpen(item.id, item.name, item.price, item.saler, item.imageId)
+              onModalOpen(item.id, item.name, item.point, item.saler, item.imageId)
             }
             onCarOut={() => onLayoutCartOut(item.id)}
           />

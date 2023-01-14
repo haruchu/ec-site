@@ -7,7 +7,7 @@ import { Button } from '../components/molecules/button';
 import { onCartOutFunc, onPurchase } from '../hooks/purchase';
 import { ItemType } from '../layout/itemLayout';
 import PurchasedListLayout from '../layout/purchasedLayout';
-import { TotalPrice, TotalPriceText } from '../styles/List';
+import { TotalPoint, TotalPointText } from '../styles/List';
 import { Wrapper } from '../styles/Share';
 
 const PERITEM = 4;
@@ -27,7 +27,7 @@ const Cart: NextPage = () => {
     setTotalPoint(
       Object.keys(purchasedItemsInfo).reduce(
         (sum, key) =>
-          sum + parseInt(purchasedItemsInfo[key].price || 0) * purchasedItemsInfo[key].count,
+          sum + parseInt(purchasedItemsInfo[key].point || 0) * purchasedItemsInfo[key].count,
         0,
       ),
     );
@@ -85,7 +85,7 @@ const Cart: NextPage = () => {
           {
             id: data[0].id,
             name: data[0].name,
-            price: data[0].price,
+            point: data[0].point,
             imageId: data[0].imageId,
             saler: data[0].saler,
             salerId: data[0].salerId,
@@ -119,9 +119,9 @@ const Cart: NextPage = () => {
             hasMore={hasMore}
             onCartOut={(id) => onCartOut(id)}
           />
-          <TotalPrice>
-            <TotalPriceText>{totalPoint}</TotalPriceText>
-          </TotalPrice>
+          <TotalPoint>
+            <TotalPointText>{totalPoint}</TotalPointText>
+          </TotalPoint>
           <Button
             text='購入する'
             onClick={() => onPurchase(totalPoint, () => router.push('/home'))}

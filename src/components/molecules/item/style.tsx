@@ -76,7 +76,7 @@ export const StyledName = styled.p`
   white-space: nowrap;
 `;
 
-export const StyledPrice = styled.p`
+export const StyledPoint = styled.p`
   text-align: center;
   font-size: 14px;
   margin: 4px;
@@ -190,7 +190,7 @@ export const ModalSeller = styled.span`
   }
 `;
 
-export const ModalItemPrice = styled.p`
+export const ModalItemPoint = styled.p`
   width: 100%;
   font-size: 26px;
   margin: 0;

@@ -19,13 +19,13 @@ export const StyledInfiniteScroll = styled(InfiniteScroll)`
   margin: 40px 20px;
 `;
 
-export const TotalPrice = styled.p`
+export const TotalPoint = styled.p`
   display: flex;
   justify-content: flex-end;
   width: 70%;
 `;
 
-export const TotalPriceText = styled.span`
+export const TotalPointText = styled.span`
   font-size: 28px;
   ${phone`
     font-size: 20px;

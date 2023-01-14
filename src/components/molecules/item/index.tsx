@@ -9,17 +9,17 @@ import {
   StyledImage,
   StyledImageButton,
   StyledName,
-  StyledPrice,
+  StyledPoint,
   Wrapper,
 } from './style';
 type ItemProps = {
   name: string;
-  price: number;
+  point: number;
   imageId: string;
   onModalOpen: () => void;
 };
 
-export const Item = ({ name, price, imageId, onModalOpen }: ItemProps) => {
+export const Item = ({ name, point, imageId, onModalOpen }: ItemProps) => {
   const [url, setURL] = useState('');
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export const Item = ({ name, price, imageId, onModalOpen }: ItemProps) => {
         </StyledImageButton>
         <ItemInfo>
           <StyledName>{name}</StyledName>
-          <StyledPrice>{price}</StyledPrice>
+          <StyledPoint>{point}</StyledPoint>
         </ItemInfo>
       </Wrapper>
     </>

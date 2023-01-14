@@ -1,11 +1,11 @@
 import { getDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
 
-export const onCartInFunc = (itemId: string, price: number, count: number) => {
+export const onCartInFunc = (itemId: string, point: number, count: number) => {
   if (window.localStorage) {
     const defaultItemsJson = localStorage.getItem('purchasedItems');
     const defaultItems = defaultItemsJson == null ? [] : JSON.parse(defaultItemsJson);
-    const purchasedItems = [...defaultItems, { id: itemId, price: price, count: count }];
+    const purchasedItems = [...defaultItems, { id: itemId, point: point, count: count }];
     let purchasedItemsJson = JSON.stringify(purchasedItems, undefined, 1);
     localStorage.setItem('purchasedItems', purchasedItemsJson);
   }
@@ -21,15 +21,15 @@ export const onCartOutFunc = (itemId: string) => {
   }
 };
 
-export const onPurchase = async (price: number, successFunc: () => void) => {
+export const onPurchase = async (point: number, successFunc: () => void) => {
   if (window.localStorage) {
     const userId = localStorage.getItem('userId');
     const userRef = db.collection('users').doc(userId);
     const userData = await (await getDoc(userRef)).data();
-    if (userData.point - price < 0) {
+    if (userData.point - point < 0) {
       alert('ポイントが足りません');
     } else {
-      const purchasedItems: { id: string; price: string; count: number }[] = JSON.parse(
+      const purchasedItems: { id: string; point: string; count: number }[] = JSON.parse(
         localStorage.getItem('purchasedItems'),
       );
       purchasedItems.map(async (item) => {
@@ -42,10 +42,10 @@ export const onPurchase = async (price: number, successFunc: () => void) => {
         const itemData = await (await getDoc(itemRef)).data();
         const salerUserRef = db.collection('users').doc(itemData.salerId);
         const salerUserData = await (await getDoc(salerUserRef)).data();
-        await salerUserRef.update({ point: salerUserData.point + Number(item.price) * item.count });
+        await salerUserRef.update({ point: salerUserData.point + Number(item.point) * item.count });
         itemRef.delete();
       });
-      await userRef.update({ point: userData.point - price });
+      await userRef.update({ point: userData.point - point });
       localStorage.removeItem('purchasedItems');
       alert('購入しました');
       successFunc();

@@ -58,7 +58,7 @@ export const RightParts = styled.span`
   gap: 10px;
 `;
 
-export const Price = styled.span`
+export const Point = styled.span`
   font-size: 28px;
   ${phone`
     font-size: 20px;

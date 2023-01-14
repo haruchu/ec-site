@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof PurchasedItem> = (args) => <PurchasedItem 
 export const Default = Template.bind({});
 Default.args = {
   name: 'トマト',
-  price: 200,
+  point: 200,
   imagePath: 'path',
   salerName: 'test産業',
 };
